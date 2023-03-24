@@ -331,11 +331,15 @@ public void setColumnWidth(int index , int width)
      dtm.addColumn("End Date");
      dtm.addColumn("Price");
      dtm.addColumn("Action");
+     dtm.addColumn("");
      table.setModel(dtm);
      setColumnWidth(0,60);
       setColumnWidth(1,60);
       setColumnWidth(2,60);
       setColumnWidth(3,60);
       setColumnWidth(4,250);
+      setColumnWidth(5,250);
+      
  }
+ 
 }
