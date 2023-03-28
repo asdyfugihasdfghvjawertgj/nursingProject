@@ -50,6 +50,10 @@ public class mySQLQueries {
 	    {
 	    	query="insert into packagedetail(packageid,nurseid,price,oncall)values('"+data[0]+"','"+data[1]+"','"+data[2]+"','"+data[3]+"')";
 	    }
+	    else if(tbName.equals("patient"))
+	    {
+	    	query="insert into patient(name,gender,age,contact,password)values('"+data[0]+"','"+data[1]+"','"+data[2]+"','"+data[3]+"','"+data[4]+"')";
+	    }
 	    try{
 	    	con=connect.getConnection();
 	        stmt = con.createStatement();
@@ -92,9 +96,9 @@ public class mySQLQueries {
 	    {
 	    	query = "select * from packagedetail where packageid ='"+data[0]+"'and nurseid ='"+data[1]+"'and price='"+data[2]+"'and oncall='"+data[3]+"'";
 	    }
-	    else if(tbName.equals("customer"))
+	    else if(tbName.equals("patient"))
 	    {
-	    	query = "select * from customer where name ='"+data[0]+"'and address ='"+data[1]+"'and phoneno ='"+data[2]+"'and email='"+data[3]+"'";
+	    	query = "select * from patient where name ='"+data[0]+"'and gender ='"+data[1]+"'and age ='"+data[2]+"'and contact='"+data[3]+"'";
 	    }
 	    try{
 	    	con=connect.getConnection();
@@ -121,6 +125,24 @@ public class mySQLQueries {
             rs.next();
             typename = rs.getString(2);
             return typename;
+        }catch(SQLException sqle)
+        {
+            System.out.println(sqle);
+            return null;
+        }
+    }
+   public static String getPassword(String psw,String name)
+    {
+        try
+        {
+            String patientname;
+            con=connect.getConnection();
+            stmt = con.createStatement();
+            query = "select * from patient where password ='"+psw+"'and name='"+name+"';";
+            rs=stmt.executeQuery(query);
+            rs.next();
+            patientname = rs.getString(2);
+            return patientname;
         }catch(SQLException sqle)
         {
             System.out.println(sqle);
@@ -459,13 +481,13 @@ public class mySQLQueries {
              System.out.println(price);
          }
      }
-         public static  String[] serachPackage(String name)
+         public static  String[] serachPackage(String nid)
          {
         	 try
         	 {
         		 con=connect.getConnection();
         		 stmt=con.createStatement();
-        		 query="select * from packagedetail where nurseid='"+name+"';";
+        		 query="select * from packagedetail where nurseid='"+nid+"';";
         		 rs=stmt.executeQuery(query);
         		 int rowcount=0;
         		 while(rs.next())
@@ -474,14 +496,12 @@ public class mySQLQueries {
         		 }
         		 String[] temp=new String[rowcount];
         		 rs.beforeFirst();
-        		 //int i=0;
+        		 int i=0;
         		 while(rs.next())
         		 {
-        			 temp[1]=rs.getString(1);
-        			 temp[2]=rs.getString(2);
-        			 temp[3]=rs.getString(3);
-        			 temp[4]=rs.getString(4);
-        			 //i++;
+        			  temp[i]=rs.getString(1);
+        				 i++;
+        			 
         		 }
         		 return temp;
         	 }
@@ -496,39 +516,41 @@ public class mySQLQueries {
         		 return null;
         	 }
      }
-         public static  String[] searchPackdate(String[] pac)
+         public static  String[] searchPackdate(String pac)
          {
-        	 try
-        	 {
-        		 con=connect.getConnection();
-        		 stmt=con.createStatement();
-        		 query="select * from package where packageid='"+pac[2]+"';";
-        		 rs=stmt.executeQuery(query);
-        		 int rowcount=0;
-        		 while(rs.next())
-        		 {
-        			 rowcount++;
-        		 }
-        		 String[] temp=new String[rowcount];
-        		 rs.beforeFirst();
-        		 int i=0;
-        		 while(rs.next())
-        		 {
-        			 temp[i]=rs.getString(2);
-        			// temp[1]=rs.getString(3);
-        		 }
-        		 return temp;
-        	 }
-        	 catch(SQLException sqle)
-        	 {
-        		System.out.println(sqle);
-        		return null;
-        	 }
-        	 catch(Exception e)
-        	 {
-        		 e.printStackTrace();
-        		 return null;
-        	 }
+        	 try{
+                 String[] pdate = new String[2];
+                 con=connect.getConnection();
+                 stmt = con.createStatement();
+                 query = "select * from package where packageid='"+pac+"';";
+                 rs=stmt.executeQuery(query);
+                 rs.next();
+                 pdate[0]=rs.getString(2);
+                 pdate[1]=rs.getString(3);
+                 return pdate;
+             }catch(SQLException sqle)
+             {
+                 System.out.println(sqle);
+                 return null;
+             }  
+     }
+         public static  String[] serachPrice(String pid)
+         {
+        	 try{
+                 String[] price = new String[2];
+                 con=connect.getConnection();
+                 stmt = con.createStatement();
+                 query = "select * from packagedetail where packageid='"+pid+"';";
+                 rs=stmt.executeQuery(query);
+                 rs.next();
+                 price[0]=rs.getString(3);
+                 price[1]=rs.getString(4);
+                 return price;
+             }catch(SQLException sqle)
+             {
+                 System.out.println(sqle);
+                 return null;
+             } 
      }
 
 

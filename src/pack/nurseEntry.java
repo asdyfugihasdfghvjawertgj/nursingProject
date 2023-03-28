@@ -291,7 +291,6 @@ public void clear()
         rdoFemale.isSelected();
         txtexp.setText("");
         txtph.setText("");
-        txtaddress.setText("");
-        
+        txtaddress.setText(""); 
     }
 }

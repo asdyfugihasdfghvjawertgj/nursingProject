@@ -46,7 +46,8 @@ import java.awt.CardLayout;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
-
+import pack.login;
+import pack.register;
 public class frontEntry extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -64,9 +65,14 @@ public class frontEntry extends JDialog {
 	private JButton btncall;
 	private JButton btnview;
 	private JComboBox cbonurse;
+	Vector v=new Vector();
+	String strdataitem[]=new String[5];
 	private JTable table;/**
 	 * Launch the application.
 	 */
+	register r=new register();
+	login l=new login();
+	public JLabel lbluser;
 	public static void main(String[] args) {
 		try {
 			frontEntry dialog = new frontEntry();
@@ -76,7 +82,6 @@ public class frontEntry extends JDialog {
 			e.printStackTrace();
 		}
 	}
-
 	/**
 	 * Create the dialog.
 	 */
@@ -166,7 +171,7 @@ public class frontEntry extends JDialog {
 		panel.add(label);
 		
 		rdomale = new JRadioButton("Male");
-		rdomale.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		rdomale.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		rdomale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(rdomale.isSelected()) {
@@ -179,7 +184,7 @@ public class frontEntry extends JDialog {
 		panel.add(rdomale);
 		
 		rdofemale = new JRadioButton("Female");
-		rdofemale.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		rdofemale.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		rdofemale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(rdofemale.isSelected()) {
@@ -242,16 +247,15 @@ public class frontEntry extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 	                String nid=mySQLQueries.getNurseid(cbonurse.getSelectedItem().toString());
 	                String[] pac=mySQLQueries.serachPackage(nid);//packageid
-	                for(int a=1;a<pac.length;a++)
+	                for(int i=0;i<pac.length;i++)
 	                {
-	                	System.out.println(pac[a]);
+	                	
+	                	String[] pacdate=mySQLQueries.searchPackdate(pac[i]);
+	                	String[] price=mySQLQueries.serachPrice(pac[i]);
+	                	Object []dataRow= {i,pacdate[0],pacdate[1],price[0],price[1]};
+	                	dtm.addRow(dataRow);
+	               	
 	                }
-	                
-	                String[] pacdate=mySQLQueries.searchPackdate(pac);//startdate
-	                System.out.println(pacdate);
-	                dtm.addRow(pacdate);	
-					
-					
 				
 			}
 		});
@@ -259,17 +263,25 @@ public class frontEntry extends JDialog {
 		panel_1.add(cbonurse);
 		
 		btncall = new JButton("Call");
-		btncall.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btncall.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(table.getSelectedRow()<0)
+                {
+                    JOptionPane.showMessageDialog(null, "Please select row to call");
+                }
+			}
+		});
+		btncall.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		btncall.setBounds(372, 281, 109, 28);
 		panel_1.add(btncall);
 		
 		btnback = new JButton("Back");
-		btnback.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnback.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		btnback.setBounds(505, 281, 109, 28);
 		panel_1.add(btnback);
 		
 		btnview = new JButton("View More");
-		btnview.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnview.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		btnview.setBounds(219, 279, 130, 33);
 		panel_1.add(btnview);
 		
@@ -280,9 +292,37 @@ public class frontEntry extends JDialog {
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		
+		JButton btnLogin = new JButton("Login");
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				l.show();
+			}
+		});
+		btnLogin.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		btnLogin.setBounds(859, 20, 85, 21);
+		contentPanel.add(btnLogin);
+		
+		lbluser = new JLabel("");
+		lbluser.setBounds(949, 20, 158, 21);
+		contentPanel.add(lbluser);
+		
+		JButton btnRegister = new JButton("Register");
+		btnRegister.setBounds(764, 20, 85, 21);
+		contentPanel.add(btnRegister);
+		btnRegister.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				r.show();
+			}
+		});
+		btnRegister.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		//cbouser.setSelectedItem(l.patientname);
+		
+		
+		
 		fillDep();
 		fillDuty();
 		createtable();
+		System.out.println(l.loginname);
 	}
 	public void fillDep()
     {
@@ -330,16 +370,14 @@ public void setColumnWidth(int index , int width)
      dtm.addColumn("Start Date");
      dtm.addColumn("End Date");
      dtm.addColumn("Price");
-     dtm.addColumn("Action");
-     dtm.addColumn("");
+     dtm.addColumn("On Call");
+     //dtm.addColumn("Action");
      table.setModel(dtm);
-     setColumnWidth(0,60);
-      setColumnWidth(1,60);
-      setColumnWidth(2,60);
-      setColumnWidth(3,60);
-      setColumnWidth(4,250);
-      setColumnWidth(5,250);
-      
+     setColumnWidth(0,50);
+      setColumnWidth(1,100);
+      setColumnWidth(2,100);
+      setColumnWidth(3,100);
+      setColumnWidth(4,100);
+      //setColumnWidth(5,100);
  }
- 
 }

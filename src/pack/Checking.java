@@ -10,11 +10,11 @@ import pack.mySQLQueries;
 public class Checking {
 public static boolean IsValidName(String str)
 {
-    if(IsNull(str)||str.startsWith(""))
-        return false;
-    if(!IsLetter(str))
-        return false;
-    return true;
+	if(IsNull(str))
+	  {
+		return false;
+	  }
+		else return true;
 }
 public static boolean IsNull(String str)
 {
@@ -23,6 +23,7 @@ public static boolean IsNull(String str)
     else
         return false;
 }
+
 public static boolean IsLetter(String str)
 {
     boolean b = false ;
@@ -52,6 +53,7 @@ public static boolean IsEformat(String str)
     else
         return b ;
    }
+
 public static boolean IsAllDigit(String str)
 {
     boolean b = false ;
