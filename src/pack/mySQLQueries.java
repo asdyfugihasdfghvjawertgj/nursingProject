@@ -54,6 +54,10 @@ public class mySQLQueries {
 	    {
 	    	query="insert into patient(name,gender,age,contact,password)values('"+data[0]+"','"+data[1]+"','"+data[2]+"','"+data[3]+"','"+data[4]+"')";
 	    }
+	    else if(tbName.equals("calling"))
+	    {
+	    	query="insert into calling(packageid,nurseid,patientid,date,price)values('"+data[0]+"','"+data[1]+"','+data[2]+','"+data[3]+"','"+data[4]+"')";
+	    }
 	    try{
 	    	con=connect.getConnection();
 	        stmt = con.createStatement();
@@ -101,6 +105,7 @@ public class mySQLQueries {
 	    	query = "select * from patient where name ='"+data[0]+"'and gender ='"+data[1]+"'and age ='"+data[2]+"'and contact='"+data[3]+"'";
 	    }
 	    try{
+	    	
 	    	con=connect.getConnection();
 	        stmt = con.createStatement();
 	        rs = stmt.executeQuery(query);
@@ -131,17 +136,18 @@ public class mySQLQueries {
             return null;
         }
     }
-   public static String getPassword(String psw,String name)
+   public static String[] getPassword(String psw,String name)
     {
         try
         {
-            String patientname;
+            String patientname[]=new String[2];
             con=connect.getConnection();
             stmt = con.createStatement();
             query = "select * from patient where password ='"+psw+"'and name='"+name+"';";
             rs=stmt.executeQuery(query);
             rs.next();
-            patientname = rs.getString(2);
+            patientname[0]=rs.getString(1);
+            patientname[1] = rs.getString(2);
             return patientname;
         }catch(SQLException sqle)
         {
@@ -149,55 +155,40 @@ public class mySQLQueries {
             return null;
         }
     }
-    public String getTypeID(String typename)
-    {
-        String typeid;
-        try
-        {
-            stmt = con.createStatement();
-            query = "select typeid from type where typename='"+typename+"';";
-            rs=stmt.executeQuery(query);
-            rs.next();
-            typeid=rs.getString(1);
-            return typeid;
-        }
-        catch(SQLException sqle)
-        {
-            System.out.println(sqle);
-            return null;
-        }
-    }
-    public String getBrandID(String brandname)
+   public static String[] getViewHistory(int cusid)
+   {
+	   try{
+           String[] pdate = new String[4];
+           con=connect.getConnection();
+           stmt = con.createStatement();
+           query = "select * from calling where patientid="+cusid+";";
+           rs=stmt.executeQuery(query);
+           rs.next();
+           pdate[0]=rs.getString(2);
+           pdate[1]=rs.getString(3);
+           pdate[2]=rs.getString(5);
+           pdate[3]=rs.getString(6);
+           return pdate;
+       }catch(SQLException sqle)
+       {
+           System.out.println(sqle);
+           return null;
+       } 
+   }
+    public static int getCusid(String cusname)
     {
         try{
-            String brandid;
+            int cusid;
             stmt = con.createStatement();
-            query = "select brandid from brand where brandname='"+brandname+"';";
+            query = "select patientid from patient where name='"+cusname+"';";
             rs=stmt.executeQuery(query);
             rs.next();
-            brandid=rs.getString(1);
-            return brandid;
+            cusid=rs.getInt(1);
+            return cusid;
         }catch(SQLException sqle)
         {
             System.out.println(sqle);
-            return null;
-        }
-    }
-     public static String getBrandName(String brandid)
-    {
-        try{
-            String brandname;
-            con=connect.getConnection();
-            stmt = con.createStatement();
-            query = "select * from brand where brandid='"+brandid+"';";
-            rs=stmt.executeQuery(query);
-            rs.next();
-            brandname=rs.getString(2);
-            return brandname;
-        }catch(SQLException e)
-        {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-            return null;
+            return (Integer) null;
         }
     }
      public static   String getAutoid(String field , String tabel , String prefix) throws ClassNotFoundException
@@ -358,6 +349,41 @@ public class mySQLQueries {
          }  
     	 
      }
+     public static  String[] serachNurse(String nid)
+     {
+    	 try
+    	 {
+    		 con=connect.getConnection();
+    		 stmt=con.createStatement();
+    		 query="select * from nurse where nurseid='"+nid+"';";
+    		 rs=stmt.executeQuery(query);
+    		 int rowcount=0;
+    		 while(rs.next())
+    		 {
+    			 rowcount++;
+    		 }
+    		 String[] temp=new String[rowcount];
+    		 rs.beforeFirst();
+    		 int i=0;
+    		 while(rs.next())
+    		 {
+    			  temp[i]=rs.getString(2);
+    				 i++;
+    			 
+    		 }
+    		 return temp;
+    	 }
+    	 catch(SQLException sqle)
+    	 {
+    		System.out.println(sqle);
+    		return null;
+    	 }
+    	 catch(Exception e)
+    	 {
+    		 e.printStackTrace();
+    		 return null;
+    	 }
+ }
      
      public static String getDutyid(String dutyname)
      {
@@ -397,89 +423,24 @@ public class mySQLQueries {
          }  
     	 
      }
-     
-     public static String[] getMerchandiseData(String merid)
+     public static String getPacid(String pacstartdate,String pacenddate)
      {
-    	 try {
-    		 String[] value=new String[2];
-    		 con=connect.getConnection();
-    		 stmt=con.createStatement();
-    		 query="select * from merchandise where merid='"+merid+"';";
-    		 rs=stmt.executeQuery(query);
-    		 rs.next();
-    		 value[0]=rs.getString(2);
-    		 value[1]=rs.getString(3);
-    		 return value;
-    	 }
-    	 catch(SQLException e)
-    	 {
-    		 JOptionPane.showMessageDialog(null, e.getMessage());
-    		 return null;
-    	 }
-     }
-     public static String[] getSupplierData(String supid)
-     {
-    	 try {
-    		 String[] value=new String[4];
-    		 con=connect.getConnection();
-    		 stmt=con.createStatement();
-    		 query="select * from supplier where supplierid='"+supid+"';";
-    		 rs=stmt.executeQuery(query);
-    		 if(rs.next())
-    		 {
-    			 for(int i=0;i<value.length;i++)
-    			 {
-    				 value[i]=rs.getString(i+2);
-    			 }
-    		 }
-    		 return value;
-    	 }
-    	 catch(SQLException e)
-    	 {
-    		 JOptionPane.showMessageDialog(null, e.getMessage());
-    		 return null;
-    	 }
-     }
-     public static String[] getItemData(String itid)
-     {
-    	 try {
-    		 String[] value=new String[6];
-    		 con=connect.getConnection();
-    		 stmt=con.createStatement();
-    		 query="select * from item where itemID='"+itid+"';";
-    		 rs=stmt.executeQuery(query);
-    		 if(rs.next())
-    		 {
-    			 value[0]=rs.getString(1);//itemid
-    			 value[1]=rs.getString(3);//itemname
-    			 value[2]=rs.getString(4);//culsaleprice
-    			 value[3]=rs.getString(2);//merid
-    			 value[4]=rs.getString(5);//remark
-    			 value[5]=rs.getString(6);//totalQty
-    			 
-    		 }
-    		 return value;
-    	 }
-    	 catch(SQLException e)
-    	 {
-    		 JOptionPane.showMessageDialog(null, e.getMessage());
-    		 return null;
-    	 }
-     }
-
-     public static void P_updateitemquantity ( String tbname , String id , String nprice , String data )
-     {
-         int r1=0,price=0;
-        // mySQLQueries msql = new mySQLQueries();
-         String q = mySQLQueries.getItemData(id)[5];//qty(now)
-         System.out.println("Save Qty ="+data);
-         System.out.println("Save curQuantity="+q);
-         if(tbname.equals("purchasedetail"))
+    	 
+    	 try{
+             String pid;
+             con=connect.getConnection();
+             stmt = con.createStatement();
+             query = "select packageid from package where startdate='"+pacstartdate+"' and enddate='"+pacenddate+"';";
+             rs=stmt.executeQuery(query);
+             rs.next();
+             pid=rs.getString(1);
+             return pid;
+         }catch(SQLException sqle)
          {
-             r1=Integer.parseInt(q)+Integer.parseInt(data);
-             price = Integer.parseInt(nprice)+(int)(Integer.parseInt(nprice)*0.1);
-             System.out.println(price);
-         }
+             System.out.println(sqle);
+             return null;
+         }  
+    	 
      }
          public static  String[] serachPackage(String nid)
          {
@@ -552,6 +513,31 @@ public class mySQLQueries {
                  return null;
              } 
      }
+         public static boolean insertConfirmData(String tbName , String pid,String nid,int cid,String date,String price)
+     	{
+     	    if(tbName.equals("calling"))
+     	    {
+     	    	query="insert into calling(packageid,nurseid,patientid,date,price)values('"+pid+"','"+nid+"',"+cid+",'"+date+"','"+price+"')";
+     	    }
+     	  
+     	    try{
+     	    	con=connect.getConnection();
+     	        stmt = con.createStatement();
+     	        boolean r = stmt.execute(query);
+     	       //System.out.println(query+r);
+     	        if(r)
+     	        {
+     	            return false;
+     	        }
+     	        else return true;
+
+     	    }catch(SQLException e)
+     	    {
+     	        JOptionPane.showMessageDialog(null,e.getMessage());
+     	        e.printStackTrace();
+     	        return true;
+     	    }
+     	}
 
 
 }

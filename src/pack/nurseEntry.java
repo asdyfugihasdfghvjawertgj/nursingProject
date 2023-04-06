@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import java.awt.Choice;
+import javax.swing.JTextArea;
 
 public class nurseEntry extends JDialog {
 
@@ -27,7 +28,7 @@ public class nurseEntry extends JDialog {
 	private JButton btnSave;
 	private JButton btnCancel;
 	private JButton btnClose;
-	private JTextField txtname;
+	//private JTextField txtname;
 	private JTextField txtexp;
 	private JTextField txtph;
 	private JTextField txtaddress;
@@ -36,7 +37,7 @@ public class nurseEntry extends JDialog {
 	private JRadioButton rdoMale;
 	private JLabel lblNewLabel_8;
 	private JLabel lblNewLabel_2;
-	private JTextField textName;
+	private JTextArea txtname1;
 	/**
 	 * Launch the application.
 	 */
@@ -72,11 +73,6 @@ public class nurseEntry extends JDialog {
 		lblNewLabel_2 = new JLabel("Name:");
 		lblNewLabel_2.setBounds(10, 72, 45, 13);
 		contentPanel.add(lblNewLabel_2);
-		
-		textName = new JTextField();
-		textName.setBounds(162, 59, 273, 29);
-		contentPanel.add(textName);
-		textName.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Dep ID:");
 		lblNewLabel_1.setBounds(10, 112, 97, 34);
@@ -158,27 +154,28 @@ public class nurseEntry extends JDialog {
 		btnSave = new JButton("save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 if(Checking.IsValidName(textName.getText()))
-			        {
-			            JOptionPane.showMessageDialog(null, "Please enter VALID Name.");
-			            txtname.requestFocus();
-			            txtname.selectAll();
-			        }
-				 	else if(cbodepid.getSelectedIndex()==0)
+
+		         if(!Checking.IsValidName(txtname1.getText()))
+		         {
+		            JOptionPane.showMessageDialog(null, "Please enter VALID Name.");
+		            txtname1.requestFocus();
+		            txtname1.selectAll();
+		         }
+				else if(cbodepid.getSelectedIndex()==0)
 			            JOptionPane.showMessageDialog(null,"Please choose department id!");
-				    else if(cbodutyid.getSelectedIndex()==0)
+				else if(cbodutyid.getSelectedIndex()==0)
 			            JOptionPane.showMessageDialog(null,"Please choose duty id!");
-				    else if(gender==null || gender.equals(""))
-			        {
+		       else if(gender==null || gender.equals(""))
+			     {
 			        	JOptionPane.showMessageDialog(null,"Please choose gender");
-			        }
-				    else if(Checking.IsNull(txtexp.getText()))
-			        {
+			     }
+				else if(Checking.IsNull(txtexp.getText()))
+			     {
 			            JOptionPane.showMessageDialog(null, "Please enter Phone.");
 			            txtexp.requestFocus();
 			            txtexp.selectAll();
-			        }
-			        else if(!Checking.IsAllDigit(txtph.getText()))
+	             }
+			      else if(!Checking.IsAllDigit(txtph.getText()))
 			        {
 			            JOptionPane.showMessageDialog(null,"Please enter valid Phone Number.");
 			            txtph.requestFocus();
@@ -194,7 +191,7 @@ public class nurseEntry extends JDialog {
 			        else
 			        {
 		            String st[]=new String[9];
-		            st[0] = (String)textName.getText();
+		            st[0] = (String)txtname1.getText();
 					st[1] = (String)cbodepid.getSelectedItem();
 					st[2] = (String)cbodutyid.getSelectedItem();
 					st[3] = gender;
@@ -208,7 +205,7 @@ public class nurseEntry extends JDialog {
 		            {
 		                String[] str=new String[8];
 		                str[0]=lblnurseid.getText();
-		                str[1]=textName.getText();
+		                str[1]=txtname1.getText();
 		                str[2]=(String)cbodepid.getSelectedItem();
 		                str[3]=(String)cbodutyid.getSelectedItem();
 		                str[4]=gender;
@@ -246,6 +243,10 @@ public class nurseEntry extends JDialog {
 		JLabel lblNewLabel_5 = new JLabel("Duty ID:");
 		lblNewLabel_5.setBounds(10, 164, 45, 13);
 		contentPanel.add(lblNewLabel_5);
+		
+		txtname1 = new JTextArea();
+		txtname1.setBounds(162, 65, 273, 29);
+		contentPanel.add(txtname1);
 		//
 		AutoID();
 		//super(parent,modal);
@@ -284,7 +285,6 @@ public void fillDuty()
   
 public void clear()
     {
-		textName.setText("");
         cbodepid.setSelectedIndex(0);
         cbodutyid.setSelectedIndex(0);
         rdoMale.isSelected();

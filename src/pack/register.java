@@ -18,6 +18,8 @@ import java.util.regex.Pattern;
 import javax.swing.JCheckBox;
 import javax.swing.JPasswordField;
 import java.awt.Font;
+import javax.swing.ImageIcon;
+import java.awt.Color;
 
 public class register extends JDialog {
 
@@ -33,6 +35,8 @@ public class register extends JDialog {
 	private JPasswordField passwordField;
 	private JPasswordField pswconfirm;
 	login l=new login();
+	public JPanel panel_3;
+	private JLabel lblNewLabel_5;
 	/**
 	 * Launch the application.
 	 */
@@ -50,25 +54,26 @@ public class register extends JDialog {
 	 * Create the dialog.
 	 */
 	public register() {
-		setBounds(100, 100, 573, 492);
+		setBounds(0, 0, 1550, 1000);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(new Color(233, 150, 122));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
 		txtname = new JTextField();
-		txtname.setBounds(158, 10, 375, 29);
+		txtname.setBounds(1151, 14, 375, 29);
 		contentPanel.add(txtname);
 		txtname.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("NAME:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel.setBounds(25, 13, 74, 26);
+		lblNewLabel.setBounds(1038, 13, 74, 26);
 		contentPanel.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("GENDER:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1.setBounds(25, 60, 86, 26);
+		lblNewLabel_1.setBounds(1038, 76, 86, 26);
 		contentPanel.add(lblNewLabel_1);
 		
 		rdomale = new JRadioButton("MALE");
@@ -81,7 +86,7 @@ public class register extends JDialog {
 				}
 			}
 		});
-		rdomale.setBounds(160, 56, 103, 30);
+		rdomale.setBounds(1263, 75, 103, 30);
 		contentPanel.add(rdomale);
 		
 		rdofemale = new JRadioButton("FEMALE");
@@ -94,32 +99,32 @@ public class register extends JDialog {
 				}
 			}
 		});
-		rdofemale.setBounds(299, 56, 103, 30);
+		rdofemale.setBounds(1422, 76, 103, 30);
 		contentPanel.add(rdofemale);
 		
 		JLabel lblNewLabel_2 = new JLabel("AGE:");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_2.setBounds(25, 124, 74, 26);
+		lblNewLabel_2.setBounds(1038, 142, 74, 26);
 		contentPanel.add(lblNewLabel_2);
 		
 		txtage = new JTextField();
-		txtage.setBounds(158, 104, 375, 29);
+		txtage.setBounds(1151, 143, 375, 29);
 		contentPanel.add(txtage);
 		txtage.setColumns(10);
 		
 		txtcontact = new JTextField();
-		txtcontact.setBounds(158, 184, 375, 29);
+		txtcontact.setBounds(1151, 221, 375, 29);
 		contentPanel.add(txtcontact);
 		txtcontact.setColumns(10);
 		
 		JLabel lblNewLabel_3 = new JLabel("CONTACT-INFO:");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_3.setBounds(25, 184, 103, 29);
+		lblNewLabel_3.setBounds(1038, 219, 117, 29);
 		contentPanel.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("PASSWORD:");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_4.setBounds(25, 268, 103, 29);
+		lblNewLabel_4.setBounds(1038, 297, 103, 29);
 		contentPanel.add(lblNewLabel_4);
 		
 		btnregister = new JButton("Register");
@@ -171,7 +176,7 @@ public class register extends JDialog {
 	                str[4]=passwordField.getText();
 	                boolean save=(mySQLQueries.insertData("patient",str));
 	                if(save) {
-	                    JOptionPane.showMessageDialog(null,"Successfully save record!","Save Record",JOptionPane.INFORMATION_MESSAGE);
+	                    JOptionPane.showMessageDialog(null,"Your Registration is successfully done!","Successfully",JOptionPane.INFORMATION_MESSAGE);
 	                    //this.close();
 	                    dispose();
 	                    l.show();
@@ -191,12 +196,12 @@ public class register extends JDialog {
 			}
 				
 		});
-		btnregister.setBounds(158, 401, 85, 29);
+		btnregister.setBounds(1263, 435, 85, 29);
 		contentPanel.add(btnregister);
 		
 		btncancel = new JButton("Cancel");
 		btncancel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btncancel.setBounds(303, 401, 85, 29);
+		btncancel.setBounds(1396, 435, 85, 29);
 		contentPanel.add(btncancel);
 		
 		JCheckBox chckbxNewCheckBox = new JCheckBox("Show Password");
@@ -212,12 +217,17 @@ public class register extends JDialog {
 					passwordField.setEchoChar('*');
 			}
 		});
-		chckbxNewCheckBox.setBounds(160, 329, 136, 21);
+		chckbxNewCheckBox.setBounds(1151, 358, 136, 21);
 		contentPanel.add(chckbxNewCheckBox);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(158, 268, 375, 29);
+		passwordField.setBounds(1151, 297, 375, 29);
 		contentPanel.add(passwordField);
+		
+		lblNewLabel_5 = new JLabel("");
+		lblNewLabel_5.setIcon(new ImageIcon("C:\\Users\\HP\\Pictures\\Saved Pictures\\nurse.jpg"));
+		lblNewLabel_5.setBounds(0, 0, 902, 845);
+		contentPanel.add(lblNewLabel_5);
 		
 	}
 	public void clear()

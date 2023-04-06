@@ -148,6 +148,38 @@ public static String Sumamount(Vector data , int t)
             return String.valueOf(sum);
         }
  }
+public static String Sumamount1(Vector data , int t)
+{
+    long sum = 0 ;
+ for(int i = 0 ; i<data.size() ; i++)
+     sum=Long.parseLong((String)data.elementAt(i));
+    if(t==1)
+    {
+        int len = String.valueOf(sum).length(),
+        index = 0 ;
+        StringBuffer str = new StringBuffer("");
+        for(int i = 0 ; i<len ; i++)
+        {
+            if(index==3)
+            {
+                str.append(",");
+                index = 0 ;
+                i--;
+            }
+            else
+            {
+                str.append(String.valueOf(sum).charAt(len-i-1));
+                index++;
+            }
+        }
+            return str.reverse().toString();
+        }
+    
+        else
+        {
+            return String.valueOf(sum);
+        }
+ }
 public static String[] fromtable(JTable mtable , int size , int column )
 {
     String[]str = new String[size];

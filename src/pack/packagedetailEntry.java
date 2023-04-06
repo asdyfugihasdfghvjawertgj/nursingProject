@@ -120,7 +120,8 @@ public class packagedetailEntry extends JDialog {
 	                String[] str=new String[4];
 	                str[0]=(String)cbopackage.getSelectedItem();
 	                str[1]=(String)cbonurse.getSelectedItem();
-	                str[2]=(String)txtprice.getText();
+	                Long amount=Long.parseLong(txtprice.getText().toString());
+	                str[2]=amount.toString();
 	                str[3]=(String)txtcall.getText();
 	                boolean save=(mySQLQueries.insertData("packagedetail",str));
 	                if(save)
