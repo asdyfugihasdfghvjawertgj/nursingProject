@@ -79,7 +79,7 @@ public class dutyEntry extends JDialog {
 				String st[] = new String[1];
 		        if(Checking.IsNull(txtName.getText()))//true
 		        {
-		            JOptionPane.showMessageDialog(null, "First you must enter valid Brand name.");
+		            JOptionPane.showMessageDialog(null, "First you must enter duty.");
 		            txtName.requestFocus();
 		            txtName.selectAll();
 		        }
@@ -161,8 +161,6 @@ public class dutyEntry extends JDialog {
     {
         lblid.setText((String.valueOf(mySQLQueries.getAutoid("dutyid", "duty", "DU-"))));
     }
-
-
     public void clear()
     {
     	txtName.setText("");

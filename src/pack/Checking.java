@@ -14,6 +14,14 @@ public static boolean IsValidName(String str)
 	  {
 		return false;
 	  }
+	else if(IsLetter(str))
+	{
+		return true;
+	}
+	else if(IsAllDigit(str))
+	{
+		return false; 	
+	}
 		else return true;
 }
 public static boolean IsNull(String str)

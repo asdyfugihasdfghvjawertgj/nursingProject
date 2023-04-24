@@ -109,6 +109,7 @@ public class departmentEntry extends JDialog {
 							}
 		                    txtName.setText("");
 		                    txtName.requestFocus();
+		                    clear();
 		                }
 		                else
 		                {

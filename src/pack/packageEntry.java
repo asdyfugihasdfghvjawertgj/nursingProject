@@ -99,13 +99,13 @@ public class packageEntry extends JDialog {
 				String st[] = new String[2];
 		        if(Checking.IsNull(txtstart.getText()))//true
 		        {
-		            JOptionPane.showMessageDialog(null, "First you must enter valid Brand name.");
+		            JOptionPane.showMessageDialog(null, "First you must enter Start Time.");
 		            txtstart.requestFocus();
 		            txtstart.selectAll();
 		        }
 		        else if(Checking.IsNull(txtend.getText()))
 		        {
-		        	JOptionPane.showMessageDialog(null, "First you must enter valid Brand name.");
+		        	JOptionPane.showMessageDialog(null, "First you must enter End Time.");
 		            txtend.requestFocus();
 		            txtend.selectAll();
 		        }

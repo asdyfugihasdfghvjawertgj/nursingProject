@@ -154,7 +154,7 @@ public class nurseEntry extends JDialog {
 		btnSave = new JButton("save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				
 		         if(!Checking.IsValidName(txtname1.getText()))
 		         {
 		            JOptionPane.showMessageDialog(null, "Please enter VALID Name.");
@@ -169,9 +169,20 @@ public class nurseEntry extends JDialog {
 			     {
 			        	JOptionPane.showMessageDialog(null,"Please choose gender");
 			     }
+		       else if(Integer.parseInt(txtexp.getText())>60) 
+		        {
+		            JOptionPane.showMessageDialog(null, "Please enter valid experience year.");
+		            txtexp.requestFocus();
+		            txtexp.selectAll();
+		        }else if(!Checking.IsAllDigit(txtexp.getText().trim())) 
+		        {
+		            JOptionPane.showMessageDialog(null, "Please enter valid Experience.");
+		            txtexp.requestFocus();
+		            txtexp.selectAll();
+		        }
 				else if(Checking.IsNull(txtexp.getText()))
 			     {
-			            JOptionPane.showMessageDialog(null, "Please enter Phone.");
+			            JOptionPane.showMessageDialog(null, "Please enter Experience.");
 			            txtexp.requestFocus();
 			            txtexp.selectAll();
 	             }
@@ -186,6 +197,9 @@ public class nurseEntry extends JDialog {
 			            JOptionPane.showMessageDialog(null,"Please enter Address.");;
 			            txtaddress.requestFocus();
 			            txtaddress.selectAll();
+			        }
+			        else if(!mySQLQueries.isPhoneNoValid((String)txtph.getText())) {
+	                	JOptionPane.showMessageDialog(null,"Phone no invalid");
 			        }
 			        
 			        else
@@ -233,10 +247,23 @@ public class nurseEntry extends JDialog {
 		contentPanel.add(btnSave);
 		
 		btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clear();
+			}
+		});
 		btnCancel.setBounds(162, 542, 125, 21);
 		contentPanel.add(btnCancel);
 		
 		btnClose = new JButton("Close");
+		btnClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?","Confrim",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION)
+				{	
+					dispose();
+				}
+			}
+		});
 		btnClose.setBounds(315, 542, 119, 21);
 		contentPanel.add(btnClose);
 		
@@ -285,6 +312,7 @@ public void fillDuty()
   
 public void clear()
     {
+		txtname1.setText(null);
         cbodepid.setSelectedIndex(0);
         cbodutyid.setSelectedIndex(0);
         rdoMale.isSelected();

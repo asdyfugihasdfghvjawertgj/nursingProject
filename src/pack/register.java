@@ -37,6 +37,7 @@ public class register extends JDialog {
 	login l=new login();
 	public JPanel panel_3;
 	private JLabel lblNewLabel_5;
+	private JButton btnback;
 	/**
 	 * Launch the application.
 	 */
@@ -196,12 +197,22 @@ public class register extends JDialog {
 			}
 				
 		});
-		btnregister.setBounds(1263, 435, 85, 29);
+		btnregister.setBounds(1202, 435, 85, 29);
 		contentPanel.add(btnregister);
 		
 		btncancel = new JButton("Cancel");
+		btncancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtname.setText(null);
+				txtage.setText(null);
+				txtcontact.setText(null);
+				passwordField.setText(null);
+				rdomale.setSelected(false);
+		        rdofemale.setSelected(false);
+			}
+		});
 		btncancel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btncancel.setBounds(1396, 435, 85, 29);
+		btncancel.setBounds(1321, 435, 85, 29);
 		contentPanel.add(btncancel);
 		
 		JCheckBox chckbxNewCheckBox = new JCheckBox("Show Password");
@@ -228,6 +239,18 @@ public class register extends JDialog {
 		lblNewLabel_5.setIcon(new ImageIcon("C:\\Users\\HP\\Pictures\\Saved Pictures\\nurse.jpg"));
 		lblNewLabel_5.setBounds(0, 0, 902, 845);
 		contentPanel.add(lblNewLabel_5);
+		
+		btnback = new JButton("Back");
+		btnback.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				firstpage fp=new firstpage();
+				fp.show();
+			}
+		});
+		btnback.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnback.setBounds(1441, 435, 85, 27);
+		contentPanel.add(btnback);
 		
 	}
 	public void clear()

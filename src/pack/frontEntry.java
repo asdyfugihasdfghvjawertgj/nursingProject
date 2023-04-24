@@ -50,6 +50,7 @@ import com.jgoodies.forms.layout.RowSpec;
 import pack.login;
 import pack.register;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JList;
 import javax.swing.JMenuBar;
@@ -98,6 +99,7 @@ public class frontEntry extends JDialog {
 	private int r1;
 	String price[]=new String[1];
 	String confirmData[]=new String[5];
+	String packid[]=new String[1];
 	private JMenuBar menuBar;
 	private JMenu mnMore;
 	private JMenuItem mntmNewMenuItem;
@@ -134,6 +136,7 @@ public class frontEntry extends JDialog {
 	 * Create the dialog.
 	 */
 	public frontEntry() {
+		Border blackline = BorderFactory.createLineBorder(Color.black);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(0, 0, 1550, 1000);
 		getContentPane().setLayout(new BorderLayout());
@@ -154,6 +157,9 @@ public class frontEntry extends JDialog {
 		cbodepid.setBackground(Color.LIGHT_GRAY);
 		cbodepid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//cbonurse.setSelectedIndex(0);
+				while(dtm.getRowCount()>0)
+		            dtm.removeRow(0);
 			}
 		});
 		cbodepid.setBounds(31, 64, 458, 35);
@@ -181,6 +187,12 @@ public class frontEntry extends JDialog {
 		            txtexp.requestFocus();
 		            txtexp.selectAll();
 		        }
+			    else if(!Checking.IsAllDigit(txtexp.getText().trim()))
+			    {
+			    	JOptionPane.showMessageDialog(null, "Please enter digit for experience.");
+		            txtexp.requestFocus();
+		            txtexp.selectAll();
+			    }
 		        else
 		        {
 	                String str[]=new String[4];
@@ -214,6 +226,11 @@ public class frontEntry extends JDialog {
 		panel.add(btnsearch);
 		
 		btncancel = new JButton("Cancel");
+		btncancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clear();
+			}
+		});
 		btncancel.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		btncancel.setBounds(149, 291, 91, 29);
 		panel.add(btncancel);
@@ -253,6 +270,11 @@ public class frontEntry extends JDialog {
 		panel.add(rdofemale);
 		
 		txtexp = new JTextField();
+		txtexp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		txtexp.setBackground(Color.LIGHT_GRAY);
 		txtexp.addMouseListener(new MouseAdapter() {
 			@Override
@@ -262,7 +284,7 @@ public class frontEntry extends JDialog {
 		});
 		txtexp.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 14));
 		txtexp.setText("eg:2 years");
-		txtexp.setBounds(31, 194, 458, 37);
+		txtexp.setBounds(31, 194, 388, 37);
 		panel.add(txtexp);
 		txtexp.setColumns(10);
 		
@@ -280,6 +302,13 @@ public class frontEntry extends JDialog {
 		label_4.setFont(new Font("Times New Roman", Font.ITALIC, 12));
 		label_4.setBounds(31, 37, 247, 21);
 		panel.add(label_4);
+		
+		JLabel lblNewLabel_1 = new JLabel("     Years");
+		lblNewLabel_1.setBackground(Color.LIGHT_GRAY);
+		lblNewLabel_1.setForeground(Color.BLACK);
+		lblNewLabel_1.setBorder(blackline);
+		lblNewLabel_1.setBounds(420, 194, 69, 37);
+		panel.add(lblNewLabel_1);
 		
 		panel_2 = new JPanel();
 		panel_2.setBackground(new Color(233, 150, 122));
@@ -326,6 +355,7 @@ public class frontEntry extends JDialog {
 					//System.out.println(nid);
 					String pid=mySQLQueries.getPacid(table.getValueAt(i, 1).toString(),table.getValueAt(i, 2).toString());
 					//System.out.println(pid);
+					packid[0]="0";
 					int cid=mySQLQueries.getCusid(cusname.getText().toString());
 					System.out.println(cid);
                     boolean save=mySQLQueries.insertConfirmData("calling", pid,nid,cid,date.getText(),table.getValueAt(i,3 ).toString());
@@ -337,7 +367,8 @@ public class frontEntry extends JDialog {
 				            dtm.removeRow(0);
 			            hideCall();
 			            vid.removeAllElements();
-			            
+			            mySQLQueries.afterupdateRecord("packagedetail", pid, packid);
+			            cbonurse.setSelectedIndex(0);
 			        }
 			        else
 			        {
@@ -353,6 +384,11 @@ public class frontEntry extends JDialog {
 		panel_2.add(btnConfirm);
 		
 		btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				hideCall();
+			}
+		});
 		btnCancel.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		btnCancel.setBounds(946, 292, 107, 25);
 		panel_2.add(btnCancel);
@@ -410,14 +446,21 @@ public class frontEntry extends JDialog {
 		panel_3.add(btncall);
 		btncall.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				if(table2.getSelectedRow()<0)
                 {
                     JOptionPane.showMessageDialog(null, "Please select row to call");
                 }
 				else {
+					r1=table2.getSelectedRow();
+					if(table2.getValueAt(r1, 4)=="Unavailable")
+					{
+						JOptionPane.showMessageDialog(null, "You can't get this package");
+					}
+					else {
 					showCall();
 					scrollPane_2.setVisible(false);
-					r1=table2.getSelectedRow();
+					
 					vid.addElement(r1);
 					login l=new login();
 					cusname.setText(lbluser.getText());
@@ -426,6 +469,7 @@ public class frontEntry extends JDialog {
 					v.addElement(call[3]);
 					dtm1.addRow(call);
 					total.setText("Total Amount:"+Checking.Sumamount(v,1)+"Kyats");
+					}
 				}
 				
 			}
@@ -433,6 +477,17 @@ public class frontEntry extends JDialog {
 		btncall.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		
 		btnback = new JButton("Back");
+		btnback.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clear();
+				hideNursepack();
+				
+					cbonurse.removeAllItems();
+					hideCall();
+					scrollPane_1.setVisible(false);
+				
+			}
+		});
 		btnback.setBounds(618, 271, 141, 41);
 		panel_3.add(btnback);
 		btnback.setFont(new Font("Times New Roman", Font.PLAIN, 18));
@@ -447,17 +502,30 @@ public class frontEntry extends JDialog {
 				{
 					dtm.removeRow(0);
 				}
-	                String nid=mySQLQueries.getNurseid(cbonurse.getSelectedItem().toString());
-	                String[] pac=mySQLQueries.serachPackage(nid);//packageid
-	                for(int i=0;i<pac.length;i++)
-	                {
-	                	
-	                	String[] pacdate=mySQLQueries.searchPackdate(pac[i]);
-	                	String[] price=mySQLQueries.serachPrice(pac[i]);
-	                	Object []dataRow= {i+1,pacdate[0],pacdate[1],price[0],price[1]};
-	                	dtm.addRow(dataRow);
-	               	
-	                }
+				if(cbonurse.getSelectedIndex() >0) {
+					 String nid=mySQLQueries.getNurseid(cbonurse.getSelectedItem().toString());
+		                String[] pac=mySQLQueries.serachPackage(nid);//packageid
+		                String action="";
+		                for(int i=0;i<pac.length;i++)
+		                {
+		                	
+		                	String[] pacdate=mySQLQueries.searchPackdate(pac[i]);
+		                	String[] price=mySQLQueries.serachPrice(pac[i],nid);
+		                	System.out.print(price[1]);
+			                if(price[1].equals("1"))
+			                {
+			                	action="Available";
+			                }
+			                else
+			                {
+			                	action="Unavailable";
+			                }
+		                	Object []dataRow= {i+1,pacdate[0],pacdate[1],price[0],action};
+		                	dtm.addRow(dataRow);
+		               	
+		                }
+				}
+	               
 				
 			}
 		});

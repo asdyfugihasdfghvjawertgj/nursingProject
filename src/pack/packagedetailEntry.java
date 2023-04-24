@@ -18,7 +18,6 @@ public class packagedetailEntry extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtprice;
-	private JTextField txtcall;
 	private JButton btnsave;
 	private JButton btncancel;
 	private JComboBox cbopackage;
@@ -74,15 +73,6 @@ public class packagedetailEntry extends JDialog {
 		contentPanel.add(txtprice);
 		txtprice.setColumns(10);
 		
-		JLabel lblNewLabel_3 = new JLabel("On call");
-		lblNewLabel_3.setBounds(40, 240, 45, 13);
-		contentPanel.add(lblNewLabel_3);
-		
-		txtcall = new JTextField();
-		txtcall.setBounds(177, 237, 295, 19);
-		contentPanel.add(txtcall);
-		txtcall.setColumns(10);
-		
 		btnsave = new JButton("save");
 		btnsave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -98,12 +88,7 @@ public class packagedetailEntry extends JDialog {
 		            txtprice.requestFocus();
 		            txtprice.selectAll();
 			    }
-			    else if(Checking.IsNull(txtcall.getText()))
-		        {
-		        	JOptionPane.showMessageDialog(null,"Please enter on  call");
-		        	txtcall.requestFocus();
-		        	txtcall.selectAll();
-		        }
+			   
 		        
 		        else
 		        {
@@ -111,7 +96,7 @@ public class packagedetailEntry extends JDialog {
 				st[0] = (String)cbopackage.getSelectedItem();
 				st[1] = (String)cbonurse.getSelectedItem();
 				st[2] = (String)txtprice.getText();
-	            st[3]=(String)txtcall.getText();
+	          
 	            boolean br=(mySQLQueries.isduplicate("packagedetail",st));
 	            if(!br)
 	                JOptionPane.showMessageDialog(null,"Duplicate Record!");
@@ -122,7 +107,7 @@ public class packagedetailEntry extends JDialog {
 	                str[1]=(String)cbonurse.getSelectedItem();
 	                Long amount=Long.parseLong(txtprice.getText().toString());
 	                str[2]=amount.toString();
-	                str[3]=(String)txtcall.getText();
+	           
 	                boolean save=(mySQLQueries.insertData("packagedetail",str));
 	                if(save)
 	                    JOptionPane.showMessageDialog(null,"Successfully save record!","Save Record",JOptionPane.INFORMATION_MESSAGE);
@@ -138,10 +123,23 @@ public class packagedetailEntry extends JDialog {
 		contentPanel.add(btnsave);
 		
 		btncancel = new JButton("cancel");
+		btncancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clear();
+			}
+		});
 		btncancel.setBounds(350, 380, 85, 21);
 		contentPanel.add(btncancel);
 		
-		btnclear = new JButton("clear");
+		btnclear = new JButton("close");
+		btnclear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?","Confrim",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION)
+				{	
+					dispose();
+				}
+			}
+		});
 		btnclear.setBounds(506, 380, 85, 21);
 		contentPanel.add(btnclear);
 		fillPackage();
@@ -178,6 +176,6 @@ public class packagedetailEntry extends JDialog {
 		cbopackage.setSelectedItem(null);
 		cbonurse.setSelectedItem(null);
 		txtprice.setText(null);
-		txtcall.setText(null);
+		
 	}
 }

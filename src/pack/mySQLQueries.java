@@ -8,7 +8,7 @@ import javax.swing.*;
 
 public class mySQLQueries {
 	
-	private static final String String = null;
+	//private static final String String = null;
 	static Connection con = null;
 	static Statement stmt;
 	static String query , query1;
@@ -28,15 +28,17 @@ public class mySQLQueries {
 	    }
 	}
 	
+	
+	//****************************inserting data***************************
 	public static boolean insertData(String tbName , String[]data)
 	{
 	    if(tbName.equals("duty"))
 	    {
-	        query = "insert into duty values ('"+data[0]+"','"+data[1]+"');";
+	        query = "insert into duty(dutyid,name) values ('"+data[0]+"','"+data[1]+"');";
 	    }
 	    else if(tbName.equals("department"))
 	    {
-	        query = "insert into department values ('"+data[0]+"','"+data[1]+"')";
+	        query = "insert into department values('"+data[0]+"','"+data[1]+"')";
 	    }
 	    else if(tbName.equals("nurse"))
 	    {
@@ -48,7 +50,7 @@ public class mySQLQueries {
 	    }
 	    else if(tbName.equals("packagedetail"))
 	    {
-	    	query="insert into packagedetail(packageid,nurseid,price,oncall)values('"+data[0]+"','"+data[1]+"','"+data[2]+"','"+data[3]+"')";
+	    	query="insert into packagedetail(packageid,nurseid,price)values('"+data[0]+"','"+data[1]+"','"+data[2]+"')";
 	    }
 	    else if(tbName.equals("patient"))
 	    {
@@ -77,6 +79,7 @@ public class mySQLQueries {
 	    }
 	}
 	
+	//*******************************Checking duplicate********************************
 	public static boolean isduplicate(String tbName , String []data)
 	{
 	    if(tbName.equals("duty"))
@@ -98,7 +101,7 @@ public class mySQLQueries {
 	    }
 	    else if(tbName.equals("packagedetail"))
 	    {
-	    	query = "select * from packagedetail where packageid ='"+data[0]+"'and nurseid ='"+data[1]+"'and price='"+data[2]+"'and oncall='"+data[3]+"'";
+	    	query = "select * from packagedetail where packageid ='"+data[0]+"'and nurseid ='"+data[1]+"'and price='"+data[2]+"'";
 	    }
 	    else if(tbName.equals("patient"))
 	    {
@@ -118,8 +121,15 @@ public class mySQLQueries {
 	        return false;
 	    }
 	}
-
-    public static String getTypeName(String typeid)
+//***********************
+	public static boolean isPhoneNoValid(String phoneno) {
+		boolean boo = false;
+			if(phoneno.length()==11 || phoneno.length() == 6) {
+				boo = true;
+			}
+		return boo;
+	}
+	public static String getTypeName(String typeid)
     {
         try
         {
@@ -193,21 +203,17 @@ public class mySQLQueries {
     }
      public static   String getAutoid(String field , String tabel , String prefix) throws ClassNotFoundException
      {
-         if(tabel.equals("package"))
-         {
-             return connect.getPrimaryKey(field, tabel, prefix);
-         }
-         else
-         {
+         
              return connect.getPrimaryKey2(field, tabel, prefix);
-         }
+         
 
      }
      public static void main(String[] args) 
      {
     	 try {
     		 mySQLQueries q=new mySQLQueries();
-    		 System.out.print(con);
+    		 System.out.println(con);
+    		 System.out.print(serachPrice1("P-00000001","NU-0000001")[0]);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -219,12 +225,22 @@ public class mySQLQueries {
     	 {
     		 if(tbName.equals("department"))
     			 rs=connect.SQLSelect("departmentid", "department");
+    		 else if(tbName.equals("patient"))
+    			 rs=connect.SQLSelect("patientid", "patient");
     		 else if(tbName.equals("duty"))
     			 rs=connect.SQLSelect("dutyid","duty");
     		 else if(tbName.equals("package"))
     			 rs=connect.SQLSelect("packageid", "package");
+    		 else if (tbName.equals("packagedetail"))
+    		 {
+    			 rs=connect.SQLSelect("packageid", "price");
+    		 	 rs=connect.SQLSelect("nurseid","price");
+    		 }
     		 else if(tbName.equals("nurse"))
+    		 { 
     			 rs=connect.SQLSelect("nurseid", "nurse");
+    		 
+    		 }
     		 int rowcount=0;
     		 while(rs.next())
     		 {
@@ -495,13 +511,15 @@ public class mySQLQueries {
                  return null;
              }  
      }
-         public static  String[] serachPrice(String pid)
+         //***********************************search nurse id for package Detail Update *****************************
+         
+         public static  String[] getnurseid_for_price(String nid)
          {
         	 try{
                  String[] price = new String[2];
                  con=connect.getConnection();
                  stmt = con.createStatement();
-                 query = "select * from packagedetail where packageid='"+pid+"';";
+                 query = "select * from packagedetail where nurseid='"+nid+"';";
                  rs=stmt.executeQuery(query);
                  rs.next();
                  price[0]=rs.getString(3);
@@ -513,6 +531,53 @@ public class mySQLQueries {
                  return null;
              } 
      }
+         
+         public static  String[] serachPrice(String pid,String nid)
+         {
+        	 try{
+                 String[] price = new String[2];
+                 con=connect.getConnection();
+                 stmt = con.createStatement();
+                 query = "select * from packagedetail where packageid='"+pid+"' and nurseid='"+nid+"';";
+                 //System.out.print(query);
+                 rs=stmt.executeQuery(query);
+                 rs.next();
+                 price[0]=rs.getString(3);
+                 price[1]=rs.getString(4);
+                 return price;
+             }catch(SQLException sqle)
+             {
+                 System.out.println(sqle);
+                 return null;
+             } 
+     } 
+         
+  public static  String[] serachPrice1(String pid,String nuid)
+     {
+    	 try{
+             String[] price = new String[2];
+             con=connect.getConnection();
+             stmt = con.createStatement();
+             query = "select * from packagedetail where packageid='"+pid+"' and nurseid='"+nuid+"';";
+             rs=stmt.executeQuery(query);
+             rs.next();
+             price[0]=rs.getString(3);
+             return price;
+         }catch(SQLException sqle)
+         {
+        	 //JOptionPane.showMessageDialog(null, "There is no Data!");
+             return null;
+         } 
+ }
+         
+         
+         
+         
+         
+         
+         
+         
+         
          public static boolean insertConfirmData(String tbName , String pid,String nid,int cid,String date,String price)
      	{
      	    if(tbName.equals("calling"))
@@ -538,6 +603,219 @@ public class mySQLQueries {
      	        return true;
      	    }
      	}
+
+         public static  String[] getnurseData(String nid)
+         {
+        	 try{
+                 String[] nur = new String[4];
+                 con=connect.getConnection();
+                 stmt = con.createStatement();
+                 query = "select * from nurse where nurseid='"+nid+"';";
+                 rs=stmt.executeQuery(query);
+                 rs.next();
+                 nur[0]=rs.getString(2);
+                 nur[1]=rs.getString(6);
+                 nur[2]=rs.getString(7);
+                 nur[3]=rs.getString(8);
+                 return nur;
+             }catch(SQLException sqle)
+             {
+                 System.out.println(sqle);
+                 return null;
+             } 
+     }
+         public static  String[] getpackData(String pid)
+         {
+        	 try{
+                 String[] date = new String[2];
+                 con=connect.getConnection();
+                 stmt = con.createStatement();
+                 query = "select * from package where packageid='"+pid+"';";
+                 rs=stmt.executeQuery(query);
+                 rs.next();
+                 date[0]=rs.getString(2);
+                 date[1]=rs.getString(3);
+                 return date;
+             }catch(SQLException sqle)
+             {
+                 System.out.println(sqle);
+                 return null;
+             } 
+     }
+         public static  String[] getpatientData(String patientid)
+         {
+        	 try{
+                 String[] pt = new String[2];
+                 con=connect.getConnection();
+                 stmt = con.createStatement();
+                 query = "select * from patient where patientid='"+patientid+"';";
+                 rs=stmt.executeQuery(query);
+                 rs.next();
+                 pt[0]=rs.getString(4);
+                 pt[1]=rs.getString(5);
+                 return  pt;
+             }catch(SQLException sqle)
+             {
+                 System.out.println(sqle);
+                 return null;
+             } 
+     }
+         //********************Updage pkg,price,nurse,patient **************************
+         public static boolean updateRecord(String tbName,String id , String []data)
+         {
+             if(tbName.equals("patient"))
+                 query = "update patient set age='"+data[0]+"',contact='"+data[1]+"'where patientid='"+id+"'";
+             else  if(tbName.equals("package"))
+                 query = "update package set startdate='"+data[0]+"',enddate='"+data[1]+"'where packageid='"+id+"'";
+             else if(tbName.equals("nurse"))
+                 query = "update nurse set name='"+data[0]+"',experience='"+data[1]+"',phone='"+data[2]+"',address='"+data[3]+"'where nurseid='"+id+"'";
+             else if(tbName.equals("packagedetail"))
+                 query = "update packagedetail set price='"+data[0]+"'where packageid='"+id+"'";
+  //           else if(tbName.equals("brand"))
+//                  query = "update brand set brandname='"+data[0]+"' where brandid='"+id+"'";
+//             else if(tbName.equals("type"))
+//                  query = "update type set typename='"+data[0]+"' where typeid='"+id+"'";
+//             else if(tbName.equals("orderdetail"))
+//                  query = "update orderdetail set remark = "+Integer.parseInt(data[0])+" where orderid='"+id+"'";
+//             else if(tbName.equals("orders"))
+//             {
+//                  int cat = data[0].indexOf("(");
+//                  query = "update orders set orderdate='"+data[0].substring(0,cat)+"'where orderid='"+id+"'";
+//             }
+
+                 
+                 try{
+                	 con=connect.getConnection();
+                     stmt = con.createStatement();
+                     if(stmt.executeUpdate(query)==1)
+                     {
+                         return true;
+                     }
+                     else{
+                         JOptionPane.showMessageDialog(null,"The table does not contain the specified ID.","Update Fail",JOptionPane.ERROR_MESSAGE);
+                         return false;}
+                 }
+                 catch(SQLException e)
+                 {
+                     JOptionPane.showMessageDialog(null, e.getMessage(), "SQLException", JOptionPane.ERROR_MESSAGE);
+                     return false;
+                 }
+           }
+         public static boolean afterupdateRecord(String tbName,String id , String []data)
+         {
+             if(tbName.equals("packagedetail"))
+                 query = "update packagedetail set oncall='"+data[0]+"'where packageid='"+id+"'";
+  //           else if(tbName.equals("brand"))
+//                  query = "update brand set brandname='"+data[0]+"' where brandid='"+id+"'";
+//             else if(tbName.equals("type"))
+//                  query = "update type set typename='"+data[0]+"' where typeid='"+id+"'";
+//             else if(tbName.equals("orderdetail"))
+//                  query = "update orderdetail set remark = "+Integer.parseInt(data[0])+" where orderid='"+id+"'";
+//             else if(tbName.equals("orders"))
+//             {
+//                  int cat = data[0].indexOf("(");
+//                  query = "update orders set orderdate='"+data[0].substring(0,cat)+"'where orderid='"+id+"'";
+//             }
+
+                 
+                 try{
+                	 con=connect.getConnection();
+                     stmt = con.createStatement();
+                     if(stmt.executeUpdate(query)==1)
+                     {
+                         return true;
+                     }
+                     else{
+                         JOptionPane.showMessageDialog(null,"The table does not contain the specified ID.","Update Fail",JOptionPane.ERROR_MESSAGE);
+                         return false;}
+                 }
+                 catch(SQLException e)
+                 {
+                     JOptionPane.showMessageDialog(null, e.getMessage(), "SQLException", JOptionPane.ERROR_MESSAGE);
+                     return false;
+                 }
+           }
+         public static boolean updatePackageDetailRecord(String tbName,String pid,String nid , String []data)
+         {
+             if(tbName.equals("packagedetail"))
+                 query = "update packagedetail set price='"+data[0]+"'where packageid='"+pid+"' and nurseid='"+nid+"'";
+  //           else if(tbName.equals("brand"))
+//                  query = "update brand set brandname='"+data[0]+"' where brandid='"+id+"'";
+//             else if(tbName.equals("type"))
+//                  query = "update type set typename='"+data[0]+"' where typeid='"+id+"'";
+//             else if(tbName.equals("orderdetail"))
+//                  query = "update orderdetail set remark = "+Integer.parseInt(data[0])+" where orderid='"+id+"'";
+//             else if(tbName.equals("orders"))
+//             {
+//                  int cat = data[0].indexOf("(");
+//                  query = "update orders set orderdate='"+data[0].substring(0,cat)+"'where orderid='"+id+"'";
+//             }
+
+                 
+                 try{
+                	 con=connect.getConnection();
+                     stmt = con.createStatement();
+                     if(stmt.executeUpdate(query)==1)
+                     {
+                         return true;
+                     }
+                     else{
+                         JOptionPane.showMessageDialog(null,"The table does not contain the specified ID.","Update Fail",JOptionPane.ERROR_MESSAGE);
+                         return false;}
+                 }
+                 catch(SQLException e)
+                 {
+                     JOptionPane.showMessageDialog(null, e.getMessage(), "SQLException", JOptionPane.ERROR_MESSAGE);
+                     return false;
+                 }
+           }
+         
+         public static void deleteRecord(String tbName,String id)
+         {
+             String query = "";
+             if(tbName.equals("patient"))
+             {
+                 query = "delete from patient where patientid = '"+id+"' ";
+             }
+             if(tbName.equals("package"))
+             {
+                 query = "delete from package where packageid = '"+id+"' ";
+             }
+             if(tbName.equals("nurse"))
+             {
+                 query = "delete from nurse where nurseid = '"+id+"' ";
+             }
+             try{
+                 stmt = con.createStatement();
+                 if(!query.equals("")&&stmt.executeUpdate(query)==1)
+                     JOptionPane.showMessageDialog(null, "The record is deleted successfully in"+tbName+"table.");
+                 else
+                     JOptionPane.showMessageDialog(null,"The specified ID does not found in the table .","Delete Fail",JOptionPane.ERROR_MESSAGE);
+             }catch(SQLException e)
+             {
+                 JOptionPane.showMessageDialog(null, e.getMessage(),"SQLException",JOptionPane.ERROR_MESSAGE);
+             }
+
+         }
+         public static void deletePackageDetailRecord(String tbName,String id,String nid)
+         {
+             String query = "";
+             if(tbName.equals("packagedetail"))
+             {
+                 query = "delete from packagedetail where packageid = '"+id+"' and nurseid='"+nid+"'";
+             }
+             try{
+                 stmt = con.createStatement();
+                 if(!query.equals("")&&stmt.executeUpdate(query)==1)
+                     JOptionPane.showMessageDialog(null, "The record is deleted successfully in"+tbName+"table.");
+                 else
+                     JOptionPane.showMessageDialog(null,"The specified ID does not found in the table .","Delete Fail",JOptionPane.ERROR_MESSAGE);
+             }catch(SQLException e)
+             {
+                 JOptionPane.showMessageDialog(null, e.getMessage(),"SQLException",JOptionPane.ERROR_MESSAGE);
+             }
+
+         }
 
 
 }

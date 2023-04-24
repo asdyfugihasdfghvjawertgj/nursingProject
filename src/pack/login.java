@@ -19,6 +19,8 @@ import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.EtchedBorder;
 
 public class login extends JDialog {
 
@@ -31,7 +33,6 @@ public class login extends JDialog {
 	public String loginname[];
 	//public String patientname;
 	Vector v=new Vector();
-	private JLabel lblNewLabel_2;
 	//register r=new register();
 
 	/**
@@ -51,33 +52,47 @@ public class login extends JDialog {
 	 * Create the dialog.
 	 */
 	public login() {
+		setTitle("Nursing Home Calling System");
 		setBounds(0, 0, 1550, 1000);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBackground(new Color(233, 150, 122));
+		contentPanel.setBackground(new Color(255, 255, 255));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
-		txtname = new JTextField();
-		txtname.setBounds(1125, 41, 380, 42);
-		contentPanel.add(txtname);
-		txtname.setColumns(10);
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(255, 99, 71));
+		panel.setBounds(490, 152, 633, 435);
+		contentPanel.add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblNewLabel_2 = new JLabel("User Login");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 22));
+		lblNewLabel_2.setBounds(242, 10, 132, 41);
+		panel.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel = new JLabel("UserName:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel.setBounds(978, 38, 147, 43);
-		contentPanel.add(lblNewLabel);
+		lblNewLabel.setBounds(44, 61, 147, 43);
+		panel.add(lblNewLabel);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		txtname = new JTextField();
+		txtname.setBounds(44, 118, 508, 42);
+		panel.add(txtname);
+		txtname.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Password:");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1.setBounds(978, 140, 115, 36);
-		contentPanel.add(lblNewLabel_1);
+		lblNewLabel_1.setBounds(44, 172, 115, 36);
+		panel.add(lblNewLabel_1);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(1125, 140, 380, 42);
-		contentPanel.add(passwordField);
+		passwordField.setBounds(44, 218, 506, 42);
+		panel.add(passwordField);
 		
 		chckbxNewCheckBox = new JCheckBox("Show Password");
+		chckbxNewCheckBox.setBounds(44, 280, 126, 21);
+		panel.add(chckbxNewCheckBox);
 		chckbxNewCheckBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(chckbxNewCheckBox.isSelected())
@@ -90,61 +105,65 @@ public class login extends JDialog {
 			}
 		});
 		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		chckbxNewCheckBox.setBounds(1125, 216, 126, 21);
-		contentPanel.add(chckbxNewCheckBox);
 		
 		btnlogin = new JButton("Login");
+		btnlogin.setBounds(44, 344, 126, 36);
+		panel.add(btnlogin);
+		btnlogin.setForeground(new Color(0, 0, 0));
 		btnlogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(!Checking.IsValidName(txtname.getText()))
-		        {
-		            JOptionPane.showMessageDialog(null, "Please enter VALID Name.");
-		            txtname.requestFocus();
-		            txtname.selectAll();  
-		            
-		        }
-				else if(Checking.IsNull(passwordField.getText()))
-		        {
+				public void actionPerformed(ActionEvent e) {
+					String psw=passwordField.getText().toString();
+					String name=txtname.getText();
+					loginname=mySQLQueries.getPassword(psw,name);
+					if(!Checking.IsValidName(txtname.getText()))
+			        {
+			            JOptionPane.showMessageDialog(null, "Please enter VALID Name.");
+			            txtname.requestFocus();
+			            txtname.selectAll();  
+			            
+			        }
 					
-		            JOptionPane.showMessageDialog(null, "Please enter password!");
-		            passwordField.requestFocus();
-		            passwordField.selectAll();
-		        }
-				String psw=passwordField.getText().toString();
-				String name=txtname.getText();
-				loginname=mySQLQueries.getPassword(psw,name);
-				if(loginname==null)
-				{
-					JOptionPane.showMessageDialog(null, "Your Password don't match!");
-					passwordField.requestFocus();
+					else if(txtname.getText().equals("admin")&&passwordField.getText().equals("admin"))
+					{
+						Admin A=new Admin();
+						A.show();
+						dispose();
+					}
+					else if(Checking.IsNull(passwordField.getText()))
+			        {
+						
+			            JOptionPane.showMessageDialog(null, "Please enter password!");
+			            passwordField.requestFocus();
+			            passwordField.selectAll();
+			        }
+					else if(loginname==null)
+					{
+						JOptionPane.showMessageDialog(null, "Your Password don't match!");
+						passwordField.requestFocus();
+					}
+					
+					
+					else {
+						 dispose();
+						 frontEntry f=new frontEntry();
+						 register r=new register();
+						 //f.panel_3.hide();
+						 f.show();
+						 //f.panel_1.show();
+						 f.lbluser.setText(loginname[1]);
+						 //System.out.println(loginname[0]);
+						 
+						
+					}
+						
 				}
-				else {
-					 dispose();
-					 frontEntry f=new frontEntry();
-					 register r=new register();
-					 //f.panel_3.hide();
-					 f.show();
-					 //f.panel_1.show();
-					 f.lbluser.setText(loginname[1]);
-					 //System.out.println(loginname[0]);
-					 
-					
-				}
-					
-			}
-		});
-		btnlogin.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnlogin.setBounds(1144, 296, 126, 36);
-		contentPanel.add(btnlogin);
+			});
+		btnlogin.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
 		btncancel = new JButton("cancel");
-		btncancel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btncancel.setBounds(1305, 296, 115, 36);
-		contentPanel.add(btncancel);
-		
-		lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\HP\\Pictures\\Saved Pictures\\nurse.jpg"));
-		lblNewLabel_2.setBounds(60, -54, 897, 715);
-		contentPanel.add(lblNewLabel_2);
+		btncancel.setBounds(201, 344, 115, 36);
+		panel.add(btncancel);
+		btncancel.setForeground(new Color(0, 0, 0));
+		btncancel.setFont(new Font("Tahoma", Font.BOLD, 14));
 	}
 }
