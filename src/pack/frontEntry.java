@@ -140,7 +140,7 @@ public class frontEntry extends JDialog {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(0, 0, 1550, 1000);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBackground(Color.LIGHT_GRAY);
+		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
@@ -162,12 +162,12 @@ public class frontEntry extends JDialog {
 		            dtm.removeRow(0);
 			}
 		});
-		cbodepid.setBounds(31, 64, 458, 35);
+		cbodepid.setBounds(31, 64, 388, 35);
 		panel.add(cbodepid);
 		
 		cbodutyid = new JComboBox();
 		cbodutyid.setBackground(Color.LIGHT_GRAY);
-		cbodutyid.setBounds(31, 128, 458, 37);
+		cbodutyid.setBounds(31, 128, 388, 37);
 		panel.add(cbodutyid);
 		
 		btnsearch = new JButton("Search");
@@ -283,7 +283,7 @@ public class frontEntry extends JDialog {
 			}
 		});
 		txtexp.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 14));
-		txtexp.setText("eg:2 years");
+		txtexp.setText("eg:2");
 		txtexp.setBounds(31, 194, 388, 37);
 		panel.add(txtexp);
 		txtexp.setColumns(10);
@@ -304,9 +304,10 @@ public class frontEntry extends JDialog {
 		panel.add(label_4);
 		
 		JLabel lblNewLabel_1 = new JLabel("     Years");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNewLabel_1.setBackground(Color.LIGHT_GRAY);
 		lblNewLabel_1.setForeground(Color.BLACK);
-		lblNewLabel_1.setBorder(blackline);
+		lblNewLabel_1.setBorder(null);
 		lblNewLabel_1.setBounds(420, 194, 69, 37);
 		panel.add(lblNewLabel_1);
 		

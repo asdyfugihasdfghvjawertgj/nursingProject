@@ -124,10 +124,13 @@ public class mySQLQueries {
 //***********************
 	public static boolean isPhoneNoValid(String phoneno) {
 		boolean boo = false;
-			if(phoneno.length()==11 || phoneno.length() == 6) {
+			if(phoneno.length()==11 && (phoneno.charAt(0)=='0') && (phoneno.charAt(1)=='9') && (phoneno.charAt(2)!='0')) {
 				boo = true;
+				return boo;
 			}
+			else {
 		return boo;
+			}
 	}
 	public static String getTypeName(String typeid)
     {

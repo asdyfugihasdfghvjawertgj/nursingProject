@@ -203,7 +203,10 @@ public class nurseUpdate extends JDialog {
 			            txtaddress.requestFocus();
 			            txtaddress.selectAll();
 			        }
-			         
+			        else if(!mySQLQueries.isPhoneNoValid((String)txtphone.getText())) {
+	                	JOptionPane.showMessageDialog(null,"Phone no invalid", "Fail to update record",JOptionPane.INFORMATION_MESSAGE);
+
+					}
 			        
 			        else{
 			        	 String st[] = new String[4];
@@ -222,10 +225,7 @@ public class nurseUpdate extends JDialog {
 										str[2] = (String)txtphone.getText();
 										str[3] = (String)txtaddress.getText();
 						               
-										if(!mySQLQueries.isPhoneNoValid((String)txtphone.getText())) {
-						                	JOptionPane.showMessageDialog(null,"Phone no invalid", "Fail to update record",JOptionPane.INFORMATION_MESSAGE);
-
-										}else {											
+																				
 										
 											
 							                boolean save = mySQLQueries.updateRecord("nurse", id, str);
@@ -238,7 +238,7 @@ public class nurseUpdate extends JDialog {
 							                {
 							                	JOptionPane.showMessageDialog(null, "Fail to update record","Cannot Update",JOptionPane.INFORMATION_MESSAGE);
 							                }
-										}
+										
 						            }
 				            
 			        }
