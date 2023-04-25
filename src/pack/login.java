@@ -67,16 +67,17 @@ public class login extends JDialog {
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel_2 = new JLabel("User Login");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 22));
-		lblNewLabel_2.setBounds(242, 10, 132, 41);
+		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 30));
+		lblNewLabel_2.setBounds(242, 10, 191, 41);
 		panel.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel = new JLabel("UserName:");
 		lblNewLabel.setBounds(44, 61, 147, 43);
 		panel.add(lblNewLabel);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		
 		txtname = new JTextField();
+		txtname.setFont(new Font("Times New Roman", Font.PLAIN, 19));
 		txtname.setBounds(44, 118, 508, 42);
 		panel.add(txtname);
 		txtname.setColumns(10);
@@ -84,14 +85,16 @@ public class login extends JDialog {
 		JLabel lblNewLabel_1 = new JLabel("Password:");
 		lblNewLabel_1.setBounds(44, 172, 115, 36);
 		panel.add(lblNewLabel_1);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		
 		passwordField = new JPasswordField();
+		passwordField.setFont(new Font("Times New Roman", Font.PLAIN, 19));
 		passwordField.setBounds(44, 218, 506, 42);
 		panel.add(passwordField);
 		
 		chckbxNewCheckBox = new JCheckBox("Show Password");
 		chckbxNewCheckBox.setBounds(44, 280, 126, 21);
+		chckbxNewCheckBox.setBackground(new Color(255, 99, 71));
 		panel.add(chckbxNewCheckBox);
 		chckbxNewCheckBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -158,12 +161,12 @@ public class login extends JDialog {
 						
 				}
 			});
-		btnlogin.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnlogin.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		
 		btncancel = new JButton("cancel");
 		btncancel.setBounds(201, 344, 115, 36);
 		panel.add(btncancel);
 		btncancel.setForeground(new Color(0, 0, 0));
-		btncancel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btncancel.setFont(new Font("Times New Roman", Font.BOLD, 20));
 	}
 }

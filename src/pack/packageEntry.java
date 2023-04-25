@@ -22,6 +22,7 @@ import com.toedter.calendar.JDayChooser;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JMonthChooser;
 import com.toedter.calendar.JYearChooser;
+import java.awt.Font;
 
 
 
@@ -56,44 +57,51 @@ public class packageEntry extends JDialog {
 	 */
 	public packageEntry() throws ClassNotFoundException {
 		setTitle("Package Entry");
-		setBounds(100, 100, 710, 447);
+		setBounds(100, 100, 587, 447);
 		getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Package Info:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(10, 11, 657, 223);
+		panel.setBounds(10, 11, 553, 294);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Package ID:");
-		lblNewLabel.setBounds(20, 21, 85, 14);
+		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel.setBounds(20, 30, 85, 27);
 		panel.add(lblNewLabel);
 		
 		lblid = new JLabel("");
-		lblid.setBounds(105, 21, 100, 14);
+		lblid.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblid.setBounds(202, 21, 302, 44);
 		panel.add(lblid);
 		
 		JLabel lblNewLabel_1 = new JLabel("Start Date:");
-		lblNewLabel_1.setBounds(20, 82, 75, 13);
+		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_1.setBounds(20, 112, 100, 27);
 		panel.add(lblNewLabel_1);
 		
 		txtstart = new JTextField();
-		txtstart.setBounds(105, 79, 206, 19);
+		txtstart.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		txtstart.setBounds(202, 106, 302, 40);
 		panel.add(txtstart);
 		txtstart.setColumns(10);
 		
 		lblNewLabel_2 = new JLabel("End Date:");
-		lblNewLabel_2.setBounds(20, 138, 63, 13);
+		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_2.setBounds(21, 195, 84, 40);
 		panel.add(lblNewLabel_2);
 		
 		txtend = new JTextField();
-		txtend.setBounds(105, 132, 206, 19);
+		txtend.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		txtend.setBounds(201, 195, 303, 40);
 		panel.add(txtend);
 		txtend.setColumns(10);
 		
 		
 		
 		btnSave = new JButton("Save");
+		btnSave.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String st[] = new String[2];
@@ -157,19 +165,21 @@ public class packageEntry extends JDialog {
 		        }
 			}
 		});
-		btnSave.setBounds(10, 293, 89, 23);
+		btnSave.setBounds(10, 342, 118, 33);
 		getContentPane().add(btnSave);
 		
 		btnCancel = new JButton("Cancel");
+		btnCancel.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clear();
 			}
 		});
-		btnCancel.setBounds(141, 293, 89, 23);
+		btnCancel.setBounds(232, 342, 110, 33);
 		getContentPane().add(btnCancel);
 		
 		btnClose = new JButton("Close");
+		btnClose.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?","Confrim",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION)
@@ -178,7 +188,7 @@ public class packageEntry extends JDialog {
 				}
 			}
 		});
-		btnClose.setBounds(280, 293, 89, 23);
+		btnClose.setBounds(439, 342, 124, 33);
 		getContentPane().add(btnClose);
 		AutoID();
 		

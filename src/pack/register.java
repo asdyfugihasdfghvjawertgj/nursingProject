@@ -18,26 +18,24 @@ import java.util.regex.Pattern;
 import javax.swing.JCheckBox;
 import javax.swing.JPasswordField;
 import java.awt.Font;
+import java.awt.SystemColor;
+
 import javax.swing.ImageIcon;
 import java.awt.Color;
 
 public class register extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField txtname;
-	private JTextField txtage;
-	private JTextField txtcontact;
-	private JRadioButton rdomale;
-	private JRadioButton rdofemale;
-	public JButton btnregister;
-	private JButton btncancel;
 	private String gender;
-	private JPasswordField passwordField;
 	private JPasswordField pswconfirm;
 	login l=new login();
 	public JPanel panel_3;
-	private JLabel lblNewLabel_5;
-	private JButton btnback;
+	private JTextField txtname;
+	private JTextField txtage;
+	private JTextField txtcontact;
+	private JPasswordField txtpassword;
+	private JRadioButton rdomale;
+	private JRadioButton rdofemale;
 	/**
 	 * Launch the application.
 	 */
@@ -57,41 +55,63 @@ public class register extends JDialog {
 	public register() {
 		setBounds(0, 0, 1550, 1000);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBackground(new Color(233, 150, 122));
+		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
-		txtname = new JTextField();
-		txtname.setBounds(1151, 14, 375, 29);
-		contentPanel.add(txtname);
-		txtname.setColumns(10);
+		JPanel panel = new JPanel();
+		panel.setBounds(397, 26, 803, 733);
+		panel.setBackground(new Color(255, 99, 71));
+		contentPanel.add(panel);
+		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("NAME:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel.setBounds(1038, 13, 74, 26);
-		contentPanel.add(lblNewLabel);
+		lblNewLabel.setBounds(167, 124, 146, 26);
+		panel.add(lblNewLabel);
+		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		
 		JLabel lblNewLabel_1 = new JLabel("GENDER:");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1.setBounds(1038, 76, 86, 26);
-		contentPanel.add(lblNewLabel_1);
+		lblNewLabel_1.setBounds(167, 215, 146, 26);
+		panel.add(lblNewLabel_1);
+		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		
+		JLabel lblNewLabel_2 = new JLabel("AGE:");
+		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_2.setBounds(167, 283, 146, 26);
+		panel.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("CONTACT-INFO:");
+		lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_3.setBounds(167, 372, 146, 29);
+		panel.add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_4 = new JLabel("PASSWORD:");
+		lblNewLabel_4.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_4.setBounds(167, 512, 146, 29);
+		panel.add(lblNewLabel_4);
+		
+		txtname = new JTextField();
+		txtname.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		txtname.setColumns(10);
+		txtname.setBounds(167, 162, 516, 43);
+		panel.add(txtname);
 		
 		rdomale = new JRadioButton("MALE");
-		rdomale.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rdomale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(rdomale.isSelected()) {
-					rdofemale.setSelected(false);
-					gender="male";
-				}
+					if(rdomale.isSelected()) {
+						rdofemale.setSelected(false);
+						gender="male";
+					}
 			}
 		});
-		rdomale.setBounds(1263, 75, 103, 30);
-		contentPanel.add(rdomale);
+		rdomale.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		rdomale.setBounds(167, 236, 103, 30);
+		rdomale.setBackground(new Color(255, 99, 71));
+		panel.add(rdomale);
 		
 		rdofemale = new JRadioButton("FEMALE");
-		rdofemale.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rdofemale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(rdofemale.isSelected()) {
@@ -100,36 +120,46 @@ public class register extends JDialog {
 				}
 			}
 		});
-		rdofemale.setBounds(1422, 76, 103, 30);
-		contentPanel.add(rdofemale);
-		
-		JLabel lblNewLabel_2 = new JLabel("AGE:");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_2.setBounds(1038, 142, 74, 26);
-		contentPanel.add(lblNewLabel_2);
+		rdofemale.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		rdofemale.setBounds(288, 236, 103, 30);
+		rdofemale.setBackground(new Color(255, 99, 71));
+		panel.add(rdofemale);
 		
 		txtage = new JTextField();
-		txtage.setBounds(1151, 143, 375, 29);
-		contentPanel.add(txtage);
+		txtage.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		txtage.setColumns(10);
+		txtage.setBounds(164, 319, 103, 43);
+		panel.add(txtage);
 		
 		txtcontact = new JTextField();
-		txtcontact.setBounds(1151, 221, 375, 29);
-		contentPanel.add(txtcontact);
+		txtcontact.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		txtcontact.setColumns(10);
+		txtcontact.setBounds(167, 411, 516, 80);
+		panel.add(txtcontact);
 		
-		JLabel lblNewLabel_3 = new JLabel("CONTACT-INFO:");
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_3.setBounds(1038, 219, 117, 29);
-		contentPanel.add(lblNewLabel_3);
+		txtpassword = new JPasswordField();
+		txtpassword.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		txtpassword.setBounds(167, 551, 516, 43);
+		panel.add(txtpassword);
 		
-		JLabel lblNewLabel_4 = new JLabel("PASSWORD:");
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_4.setBounds(1038, 297, 103, 29);
-		contentPanel.add(lblNewLabel_4);
+		JCheckBox chckbxNewCheckBox = new JCheckBox("Show Password");
+		chckbxNewCheckBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(chckbxNewCheckBox.isSelected())
+				{
+					txtpassword.setEchoChar((char)0);
+					
+				}
+				else
+					txtpassword.setEchoChar('*');
+			}
+		});
+		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		chckbxNewCheckBox.setBounds(177, 600, 136, 21);
+		chckbxNewCheckBox.setBackground(new Color(255, 99, 71));
+		panel.add(chckbxNewCheckBox);
 		
-		btnregister = new JButton("Register");
-		btnregister.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		JButton btnregister = new JButton("Register");
 		btnregister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String A= txtname.getText().toString();
@@ -139,6 +169,12 @@ public class register extends JDialog {
 		            txtname.requestFocus();
 		            txtname.selectAll();
 		        }
+		         else if(!Checking.IsAllDigit(txtage.getText()))
+		         {
+		        	 JOptionPane.showMessageDialog(null,"Please enter valid age.");
+			           txtage.requestFocus();
+			           txtage.selectAll();
+		         }
 				else if(gender==null || gender.equals(""))
 		        {
 		        	JOptionPane.showMessageDialog(null,"Please choose gender");
@@ -149,24 +185,30 @@ public class register extends JDialog {
 		            txtage.requestFocus();
 		            txtage.selectAll();
 		        }
+				else if(Integer.parseInt(txtage.getText())>120)
+				{
+					JOptionPane.showMessageDialog(null, "Please enter valid age.");
+		            txtage.requestFocus();
+		            txtage.selectAll();
+				}
 				else if(Checking.IsNull(txtcontact.getText()))
 		        {
 		            JOptionPane.showMessageDialog(null, "Please enter Contact-Info.");
 		            txtcontact.requestFocus();
 		            txtcontact.selectAll();
 		        }
-				else if(Checking.IsNull(passwordField.getText()))
+				else if(Checking.IsNull(txtpassword.getText()))
 		        {
 					
 		            JOptionPane.showMessageDialog(null, "Please enter password!");
-		            passwordField.requestFocus();
-		            passwordField.selectAll();
+		            txtpassword.requestFocus();
+		            txtpassword.selectAll();
 		        }
-				else if(passwordField.getText().length()<8)
+				else if(txtpassword.getText().length()<8)
 				{
-					JOptionPane.showMessageDialog(null, "Please enter at least 8 character!");
-		            passwordField.requestFocus();
-		            passwordField.selectAll();
+					JOptionPane.showMessageDialog(null, "Please enter password at least 8 character!");
+					txtpassword.requestFocus();
+					txtpassword.selectAll();
 				}
 				else {
 					String[] str=new String[5];
@@ -174,7 +216,7 @@ public class register extends JDialog {
 	                str[1]=gender;
 	                str[2]=txtage.getText();
 	                str[3]=txtcontact.getText();
-	                str[4]=passwordField.getText();
+	                str[4]=txtpassword.getText();
 	                boolean save=(mySQLQueries.insertData("patient",str));
 	                if(save) {
 	                    JOptionPane.showMessageDialog(null,"Your Registration is successfully done!","Successfully",JOptionPane.INFORMATION_MESSAGE);
@@ -195,72 +237,54 @@ public class register extends JDialog {
 				// TODO Auto-generated method stub
 				
 			}
-				
 		});
-		btnregister.setBounds(1202, 435, 85, 29);
-		contentPanel.add(btnregister);
+		btnregister.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		btnregister.setBounds(167, 639, 142, 43);
+		//btnregister.setBackground(SystemColor.info);
+		panel.add(btnregister);
 		
-		btncancel = new JButton("Cancel");
+		JButton btncancel = new JButton("Cancel");
 		btncancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtname.setText(null);
-				txtage.setText(null);
-				txtcontact.setText(null);
-				passwordField.setText(null);
-				rdomale.setSelected(false);
-		        rdofemale.setSelected(false);
+				clear();
 			}
 		});
-		btncancel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btncancel.setBounds(1321, 435, 85, 29);
-		contentPanel.add(btncancel);
+		btncancel.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		btncancel.setBounds(372, 639, 142, 43);
+		//btncancel.setBackground(SystemColor.info);
+		panel.add(btncancel);
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Show Password");
-		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		chckbxNewCheckBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(chckbxNewCheckBox.isSelected())
-				{
-					passwordField.setEchoChar((char)0);
-					
-				}
-				else
-					passwordField.setEchoChar('*');
-			}
-		});
-		chckbxNewCheckBox.setBounds(1151, 358, 136, 21);
-		contentPanel.add(chckbxNewCheckBox);
-		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(1151, 297, 375, 29);
-		contentPanel.add(passwordField);
-		
-		lblNewLabel_5 = new JLabel("");
-		lblNewLabel_5.setIcon(new ImageIcon("C:\\Users\\HP\\Pictures\\Saved Pictures\\nurse.jpg"));
-		lblNewLabel_5.setBounds(0, 0, 902, 845);
-		contentPanel.add(lblNewLabel_5);
-		
-		btnback = new JButton("Back");
+		JButton btnback = new JButton("Back");
 		btnback.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				firstpage fp=new firstpage();
+				firstpage fp = new firstpage();
 				fp.show();
 			}
 		});
-		btnback.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnback.setBounds(1441, 435, 85, 27);
-		contentPanel.add(btnback);
+		btnback.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		btnback.setBounds(561, 639, 127, 43);
+		//btnback.setBackground(SystemColor.info);
+		panel.add(btnback);
+		
+		JLabel lblNewLabel_2_1 = new JLabel("Years");
+		lblNewLabel_2_1.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+		lblNewLabel_2_1.setBounds(280, 326, 74, 26);
+		panel.add(lblNewLabel_2_1);
+		
+		JLabel lblRegister = new JLabel("Register");
+		lblRegister.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+		lblRegister.setBounds(167, 38, 154, 58);
+		panel.add(lblRegister);
 		
 	}
 	public void clear()
     {
         txtname.setText("");
-        rdomale.isSelected();
-        rdofemale.isSelected();
+        rdomale.setSelected(false);
+        rdofemale.setSelected(false);
         txtage.setText("");
         txtcontact.setText("");
-        passwordField.setText("");
+        txtpassword.setText("");
         txtname.requestFocus();
     }
 

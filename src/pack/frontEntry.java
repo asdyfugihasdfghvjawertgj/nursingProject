@@ -25,6 +25,8 @@ import javax.swing.JTextPane;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import java.awt.Label;
+import java.awt.SystemColor;
+
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
@@ -34,10 +36,15 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+
+import com.mysql.jdbc.Statement;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLDataException;
 import java.util.Vector;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.table.DefaultTableColumnModel;
@@ -111,6 +118,8 @@ public class frontEntry extends JDialog {
 	private JScrollPane scrollPane_1;
 	private JTable table_1;
 	private JScrollPane scrollPane_2;
+	Connection con;
+	clsDBConnection C = new clsDBConnection();
 	public class date {
 	    private Date today;
 
@@ -146,28 +155,42 @@ public class frontEntry extends JDialog {
 		contentPanel.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
+		panel.setBackground(new Color(255, 160, 122));
 		panel.setToolTipText("");
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel.setBounds(10, 47, 538, 361);
+		panel.setBounds(10, 58, 538, 401);
 		contentPanel.add(panel);
 		panel.setLayout(null);
 		
 		cbodepid = new JComboBox();
+		cbodepid.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		cbodepid.setBackground(Color.LIGHT_GRAY);
 		cbodepid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//cbonurse.setSelectedIndex(0);
 				while(dtm.getRowCount()>0)
 		            dtm.removeRow(0);
+				while(dtm1.getRowCount()>0)
+		            dtm1.removeRow(0);
+				while(dtm2.getRowCount()>0)
+		            dtm2.removeRow(0);
+				if(cbonurse.getSelectedIndex()>0)
+				{
+					cbonurse.removeAllItems();
+					hideNursepack();
+				}
+				
+				
+				
 			}
 		});
-		cbodepid.setBounds(31, 64, 388, 35);
+		cbodepid.setBounds(31, 87, 388, 38);
 		panel.add(cbodepid);
 		
 		cbodutyid = new JComboBox();
+		cbodutyid.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		cbodutyid.setBackground(Color.LIGHT_GRAY);
-		cbodutyid.setBounds(31, 128, 388, 37);
+		cbodutyid.setBounds(31, 171, 388, 37);
 		panel.add(cbodutyid);
 		
 		btnsearch = new JButton("Search");
@@ -222,8 +245,9 @@ public class frontEntry extends JDialog {
 			}
 		});
 		btnsearch.setFont(new Font("Times New Roman", Font.PLAIN, 18));
-		btnsearch.setBounds(34, 291, 105, 29);
+		btnsearch.setBounds(31, 351, 105, 29);
 		panel.add(btnsearch);
+		btnsearch.setBackground(SystemColor.info);
 		
 		btncancel = new JButton("Cancel");
 		btncancel.addActionListener(new ActionListener() {
@@ -232,18 +256,19 @@ public class frontEntry extends JDialog {
 			}
 		});
 		btncancel.setFont(new Font("Times New Roman", Font.PLAIN, 18));
-		btncancel.setBounds(149, 291, 91, 29);
+		btncancel.setBounds(187, 351, 123, 41);
+		btncancel.setBackground(SystemColor.info);
 		panel.add(btncancel);
 		
 		Label label = new Label("please select to be best");
-		label.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-		label.setBackground(Color.WHITE);
-		label.setBounds(31, 10, 388, 21);
+		label.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 17));
+		label.setBackground(new Color(255, 160, 122));
+		label.setBounds(31, 10, 388, 28);
 		panel.add(label);
 		
 		rdomale = new JRadioButton("Male");
-		rdomale.setBackground(Color.LIGHT_GRAY);
-		rdomale.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		rdomale.setBackground(new Color(255, 160, 122));
+		rdomale.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		rdomale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(rdomale.isSelected()) {
@@ -252,12 +277,12 @@ public class frontEntry extends JDialog {
 				}
 			}
 		});
-		rdomale.setBounds(32, 248, 89, 29);
+		rdomale.setBounds(31, 304, 89, 29);
 		panel.add(rdomale);
 		
 		rdofemale = new JRadioButton("Female");
-		rdofemale.setBackground(Color.LIGHT_GRAY);
-		rdofemale.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		rdofemale.setBackground(new Color(255, 160, 122));
+		rdofemale.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		rdofemale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(rdofemale.isSelected()) {
@@ -266,7 +291,7 @@ public class frontEntry extends JDialog {
 				}
 			}
 		});
-		rdofemale.setBounds(135, 248, 105, 29);
+		rdofemale.setBounds(173, 304, 105, 29);
 		panel.add(rdofemale);
 		
 		txtexp = new JTextField();
@@ -282,39 +307,39 @@ public class frontEntry extends JDialog {
 				txtexp.setText("");
 			}
 		});
-		txtexp.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 14));
+		txtexp.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtexp.setText("eg:2");
-		txtexp.setBounds(31, 194, 388, 37);
+		txtexp.setBounds(31, 249, 203, 37);
 		panel.add(txtexp);
 		txtexp.setColumns(10);
 		
 		Label label_2 = new Label("3.Please enter Experience you want");
-		label_2.setFont(new Font("Times New Roman", Font.ITALIC, 12));
-		label_2.setBounds(31, 167, 270, 21);
+		label_2.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
+		label_2.setBounds(31, 214, 388, 29);
 		panel.add(label_2);
 		
 		Label label_3 = new Label("2.Please select Duty!");
-		label_3.setFont(new Font("Times New Roman", Font.ITALIC, 12));
-		label_3.setBounds(31, 101, 176, 21);
+		label_3.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
+		label_3.setBounds(31, 131, 203, 34);
 		panel.add(label_3);
 		
 		Label label_4 = new Label("1.Please select Department.");
-		label_4.setFont(new Font("Times New Roman", Font.ITALIC, 12));
-		label_4.setBounds(31, 37, 247, 21);
+		label_4.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
+		label_4.setBounds(31, 44, 247, 29);
 		panel.add(label_4);
 		
-		JLabel lblNewLabel_1 = new JLabel("     Years");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		JLabel lblNewLabel_1 = new JLabel("Years");
+		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lblNewLabel_1.setBackground(Color.LIGHT_GRAY);
 		lblNewLabel_1.setForeground(Color.BLACK);
 		lblNewLabel_1.setBorder(null);
-		lblNewLabel_1.setBounds(420, 194, 69, 37);
+		lblNewLabel_1.setBounds(244, 249, 69, 37);
 		panel.add(lblNewLabel_1);
 		
 		panel_2 = new JPanel();
-		panel_2.setBackground(new Color(233, 150, 122));
+		panel_2.setBackground(new Color(255, 160, 122));
 		panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_2.setBounds(10, 418, 1516, 396);
+		panel_2.setBounds(10, 469, 1516, 345);
 		contentPanel.add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -322,7 +347,7 @@ public class frontEntry extends JDialog {
 		t2.setBounds(67, 33, 154, 25);
 		
 		panel_2.add(t2);
-		t2.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		t2.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		
 		cusname = new JLabel("");
 		cusname.setBounds(57, 68, 124, 24);
@@ -334,13 +359,13 @@ public class frontEntry extends JDialog {
 		t1.setBounds(1301, 32, 43, 27);
 		
 		panel_2.add(t1);
-		t1.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		t1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		
 		date = new JLabel("");
-		date.setBounds(1354, 33, 115, 33);
+		date.setBounds(1354, 29, 115, 33);
 		
 		panel_2.add(date);
-		date.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		date.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		date.setText(d.getMySQLDateFormat());
 		
 		total = new JLabel("");
@@ -358,7 +383,7 @@ public class frontEntry extends JDialog {
 					//System.out.println(pid);
 					packid[0]="0";
 					int cid=mySQLQueries.getCusid(cusname.getText().toString());
-					System.out.println(cid);
+					//System.out.println(cid);
                     boolean save=mySQLQueries.insertConfirmData("calling", pid,nid,cid,date.getText(),table.getValueAt(i,3 ).toString());
                     if(save)
 			        {
@@ -368,8 +393,8 @@ public class frontEntry extends JDialog {
 				            dtm.removeRow(0);
 			            hideCall();
 			            vid.removeAllElements();
-			            mySQLQueries.afterupdateRecord("packagedetail", pid, packid);
-			            cbonurse.setSelectedIndex(0);
+			            mySQLQueries.afterupdateRecord("packagedetail", pid,nid, packid);
+			            //cbonurse.setSelectedIndex(0);
 			        }
 			        else
 			        {
@@ -380,18 +405,22 @@ public class frontEntry extends JDialog {
                 }
 			}
 		});
-		btnConfirm.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		btnConfirm.setBounds(821, 292, 115, 27);
+		btnConfirm.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		btnConfirm.setBounds(812, 292, 123, 41);
+		btnConfirm.setBackground(SystemColor.info);
 		panel_2.add(btnConfirm);
 		
 		btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				while(dtm1.getRowCount()>0)
+		            dtm1.removeRow(0);
 				hideCall();
 			}
 		});
-		btnCancel.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		btnCancel.setBounds(946, 292, 107, 25);
+		btnCancel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		btnCancel.setBounds(946, 292,  123, 41);
+		btnCancel.setBackground(SystemColor.info);
 		panel_2.add(btnCancel);
 		
 		scrollPane_1 = new JScrollPane();
@@ -410,26 +439,66 @@ public class frontEntry extends JDialog {
 		scrollPane_2.setViewportView(table_1);
 		
 		Label label_1 = new Label("Welcome To Health & Safe World");
-		label_1.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		label_1.setBounds(598, 10, 424, 31);
+		label_1.setFont(new Font("Times New Roman", Font.BOLD, 30));
+		label_1.setBounds(537, 10, 626, 42);
 		contentPanel.add(label_1);
 		
-		panel_1 = new JPanel();
-		panel_1.setBounds(551, 47, 975, 361);
-		contentPanel.add(panel_1);
-		panel_1.setLayout(null);
+		lbluser = new JLabel("");
+		lbluser.setBounds(1350, 10, 115, 21);
+		contentPanel.add(lbluser);
 		
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(31, 64, 931, 194);
-		panel_1.add(scrollPane);
+		menuBar = new JMenuBar();
+		menuBar.setBounds(1450, 10, 50, 22);
+		contentPanel.add(menuBar);
 		
-		table2 = new JTable();
-		scrollPane.setViewportView(table2);
+		mnMore = new JMenu("MORE:.");
+		menuBar.add(mnMore);
+		
+		mntmNewMenuItem = new JMenuItem("Log Out");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+	        firstpage fp=new firstpage();
+	        fp.show();
+	        dispose();
+				
+			}
+		});
+		mnMore.add(mntmNewMenuItem);
+		
+		mntmNewMenuItem_1 = new JMenuItem("View History");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//while(dtm2.getRowCount()>0)
+		            //dtm2.removeRow(0);
+	            if(dtm1.getRowCount()>0)
+	            {
+	            	JOptionPane.showMessageDialog(null, "Please Click 'Confirm' or 'Cancel'");
+	            	btnConfirm.requestFocus();
+	            }
+	            else
+	            {   
+	            	scrollPane_2.setVisible(true);
+	            	//int cusid=mySQLQueries.getCusid(lbluser.getText().toString());
+	            	//String view[]=mySQLQueries.getViewHistory(cusid);
+	            	
+	            	
+	            	fillItem();
+	            	
+	            }
+				
+			}
+		});
+		mnMore.add(mntmNewMenuItem_1);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		lblNewLabel.setBounds(551, 58, 975, 401);
+		contentPanel.add(lblNewLabel);
 		
 		panel_3 = new JPanel();
+		panel_3.setBounds(551, 58, 975, 402);
+		contentPanel.add(panel_3);
 		panel_3.setBackground(new Color(233, 150, 122));
-		panel_3.setBounds(0, 0, 975, 361);
-		panel_1.add(panel_3);
 		panel_3.setLayout(null);
 		
 		
@@ -437,13 +506,10 @@ public class frontEntry extends JDialog {
 		cbonurse.setBounds(30, 24, 457, 33);
 		panel_3.add(cbonurse);
 		
-		btnview =  new JButton("View More");
-		btnview.setBounds(147, 269, 166, 44);
-		panel_3.add(btnview);
-		btnview.setFont(new Font("Times New Roman", Font.PLAIN, 18));
-		
 		btncall = new JButton("Call");
 		btncall.setBounds(396, 269, 141, 44);
+		btncall.setBackground(SystemColor.info);
+		btncall.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		panel_3.add(btncall);
 		btncall.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -475,7 +541,8 @@ public class frontEntry extends JDialog {
 				
 			}
 		});
-		btncall.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		btnsearch.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		btnsearch.setBounds(31, 351,  141, 41);
 		
 		btnback = new JButton("Back");
 		btnback.addActionListener(new ActionListener() {
@@ -490,13 +557,24 @@ public class frontEntry extends JDialog {
 			}
 		});
 		btnback.setBounds(618, 271, 141, 41);
+		btnback.setBackground(SystemColor.info);
 		panel_3.add(btnback);
 		btnback.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		panel_3.setBackground(new Color(255, 160, 122));
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\HP\\Pictures\\Saved Pictures\\dementia-care-keeping-home-with-asset-protection-planning-Cleveland.jpg"));
-		lblNewLabel.setBounds(0, 0, 975, 361);
-		panel_3.add(lblNewLabel);
+		panel_1 = new JPanel();
+		panel_1.setBackground(new Color(255, 160, 122));
+		panel_1.setBounds(0, 0, 975, 402);
+		panel_3.add(panel_1);
+		panel_1.setLayout(null);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(31, 64, 931, 194);
+		panel_1.add(scrollPane);
+		
+		table2 = new JTable();
+		scrollPane.setViewportView(table2);
+		scrollPane.setVisible(false);
 		cbonurse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				while(dtm.getRowCount()>0)
@@ -530,62 +608,12 @@ public class frontEntry extends JDialog {
 				
 			}
 		});
-		
-		lbluser = new JLabel("");
-		lbluser.setBounds(1350, 10, 115, 21);
-		contentPanel.add(lbluser);
-		
-		menuBar = new JMenuBar();
-		menuBar.setBounds(1450, 10, 50, 22);
-		contentPanel.add(menuBar);
-		
-		mnMore = new JMenu("MORE:.");
-		menuBar.add(mnMore);
-		
-		mntmNewMenuItem = new JMenuItem("Log Out");
-		mntmNewMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-	        firstpage fp=new firstpage();
-	        fp.show();
-	        dispose();
-				
-			}
-		});
-		mnMore.add(mntmNewMenuItem);
-		
-		mntmNewMenuItem_1 = new JMenuItem("View History");
-		mntmNewMenuItem_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-	            if(vid.size()>0)
-	            {
-	            	JOptionPane.showMessageDialog(null, "Please Click 'Confirm' or 'Cancel'");
-	            	btnConfirm.requestFocus();
-	            }
-	            else
-	            {   
-	            	scrollPane_2.setVisible(true);
-	            	int cusid=mySQLQueries.getCusid(lbluser.getText().toString());
-	            	String view[]=mySQLQueries.getViewHistory(cusid);
-	            	//System.out.println(view[0]);
-	            	String pac[]=mySQLQueries.searchPackdate(view[0]);
-	            	String nurse[]=mySQLQueries.serachNurse(view[1]);
-	            	for(int i=0;i<pac.length;i++)
-	                {
-	            		Object []dataView= {nurse[0],pac[0],pac[1],view[2],view[3]};
-	                	dtm2.addRow(dataView);
-	                }
-	            }
-				
-			}
-		});
-		mnMore.add(mntmNewMenuItem_1);
 		//cbouser.setSelectedItem(l.patientname);
 		fillDep();
 		fillDuty();
 		createtable();
 		createtable_1();
 		createtable_view();
-		scrollPane.setVisible(false);
 		hideCall();
 		hideNursepack();
 	}
@@ -711,7 +739,6 @@ public void setColumnWidth_2(int index , int width)
 	 panel_1.setVisible(true);
      scrollPane.setVisible(true);
      btncall.setVisible(true);
-     btnview.setVisible(true);
      btnback.setVisible(true);
      cbonurse.setVisible(true);
  }
@@ -719,7 +746,6 @@ public void setColumnWidth_2(int index , int width)
  {
      scrollPane.setVisible(false);
      btncall.setVisible(false);
-     btnview.setVisible(false);
      btnback.setVisible(false);
      cbonurse.setVisible(false);
  }
@@ -727,4 +753,34 @@ public void setColumnWidth_2(int index , int width)
  {
 	 
  }
+ public void fillItem()
+ {
+     String strdataitem[]=new String[5];
+     String strquery[]=new String[2];
+     String strnurse[]=new String[4];
+     try{
+    	 con = C.getConnection();
+         Statement ste = (Statement) con.createStatement();
+         String str = "select * from calling";
+         ResultSet rs = ste.executeQuery(str);
+         while(rs.next())
+         {
+        	 strnurse=mySQLQueries.getnurseData(rs.getString(3));
+        	 strdataitem[0]=strnurse[0];
+             strquery = mySQLQueries.searchPackdate(rs.getString(2));//start//end
+             strdataitem[1]=strquery[0];
+            strdataitem[2]=strquery[1];
+            //System.out.print(rs.getString(3));
+            strdataitem[3]=rs.getString(5);
+            strdataitem[4]=rs.getString(6);
+            dtm2.addRow(strdataitem);
+         }
+         table_1.setModel(dtm2);
+     }
+     catch(SQLException sqle)
+     {
+         System.out.println(sqle);
+     }
+ }
+
 }

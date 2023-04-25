@@ -24,6 +24,7 @@ import com.toedter.calendar.JMonthChooser;
 import com.toedter.calendar.JYearChooser;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.Font;
 
 
 
@@ -40,7 +41,6 @@ public class packageUpdate extends JDialog {
 			e.printStackTrace();
 		}
 	}
-	private JButton btnCancel;
 	private JButton btnClose;
 	private JTextField txtstart;
 	private JLabel lblNewLabel_2;
@@ -61,33 +61,39 @@ public class packageUpdate extends JDialog {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Package Info:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(10, 11, 657, 223);
+		panel.setBounds(10, 11, 534, 283);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Package ID:");
-		lblNewLabel.setBounds(20, 21, 85, 14);
+		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel.setBounds(42, 44, 99, 37);
 		panel.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Start Date:");
-		lblNewLabel_1.setBounds(20, 82, 75, 13);
+		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_1.setBounds(42, 120, 85, 31);
 		panel.add(lblNewLabel_1);
 		
 		txtstart = new JTextField();
-		txtstart.setBounds(105, 79, 206, 19);
+		txtstart.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		txtstart.setBounds(224, 120, 235, 31);
 		panel.add(txtstart);
 		txtstart.setColumns(10);
 		
 		lblNewLabel_2 = new JLabel("End Date:");
-		lblNewLabel_2.setBounds(20, 138, 63, 13);
+		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_2.setBounds(42, 194, 85, 31);
 		panel.add(lblNewLabel_2);
 		
 		txtend = new JTextField();
-		txtend.setBounds(105, 132, 206, 19);
+		txtend.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		txtend.setBounds(224, 194, 235, 31);
 		panel.add(txtend);
 		txtend.setColumns(10);
 		
 		cbopackageid_1 = new JComboBox();
+		cbopackageid_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		cbopackageid_1.setModel(new DefaultComboBoxModel(new String[] {"-Selected-"}));
 		cbopackageid_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -100,12 +106,13 @@ public class packageUpdate extends JDialog {
 				}
 			}
 		});
-		cbopackageid_1.setBounds(107, 18, 204, 31);
+		cbopackageid_1.setBounds(224, 50, 235, 31);
 		panel.add(cbopackageid_1);
 		
 		
 		
 		JButton btnUpdate = new JButton("Update");
+		btnUpdate.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String st[] = new String[2];
@@ -148,19 +155,11 @@ public class packageUpdate extends JDialog {
 		            }
 		        }
 		});
-		btnUpdate.setBounds(10, 293, 89, 23);
+		btnUpdate.setBounds(10, 321, 121, 34);
 		getContentPane().add(btnUpdate);
 		
-		btnCancel = new JButton("Cancel");
-		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				clear();
-			}
-		});
-		btnCancel.setBounds(141, 293, 89, 23);
-		getContentPane().add(btnCancel);
-		
 		btnClose = new JButton("Close");
+		btnClose.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?","Confrim",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION)
@@ -169,10 +168,11 @@ public class packageUpdate extends JDialog {
 				}
 			}
 		});
-		btnClose.setBounds(280, 293, 89, 23);
+		btnClose.setBounds(385, 321, 121, 34);
 		getContentPane().add(btnClose);
 		
 		btndelete = new JButton("Delete");
+		btndelete.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btndelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -197,7 +197,7 @@ public class packageUpdate extends JDialog {
                 }
 			}			
 		});
-		btndelete.setBounds(411, 294, 85, 21);
+		btndelete.setBounds(194, 321, 121, 33);
 		getContentPane().add(btndelete);
 		
 		fillPackage();

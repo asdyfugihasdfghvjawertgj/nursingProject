@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
+import java.awt.Font;
 
 public class nurseUpdate extends JDialog {
 	private JTextField txtaddress;
@@ -54,45 +55,53 @@ public class nurseUpdate extends JDialog {
 			JPanel panel = new JPanel();
 			panel.setLayout(null);
 			panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Patient Update Info:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-			panel.setBounds(10, 10, 497, 249);
+			panel.setBounds(10, 10, 497, 269);
 			getContentPane().add(panel);
 			{
 				JLabel txtnurse = new JLabel("Nurse ID :");
-				txtnurse.setBounds(20, 23, 81, 14);
+				txtnurse.setFont(new Font("Times New Roman", Font.BOLD, 15));
+				txtnurse.setBounds(20, 23, 94, 28);
 				panel.add(txtnurse);
 			}
 			{
 				JLabel lblname = new JLabel("Name :");
-				lblname.setBounds(24, 68, 56, 14);
+				lblname.setFont(new Font("Times New Roman", Font.BOLD, 15));
+				lblname.setBounds(24, 68, 77, 28);
 				panel.add(lblname);
 			}
 			{
 				JLabel lblexp = new JLabel("Experience :");
-				lblexp.setBounds(20, 105, 81, 18);
+				lblexp.setFont(new Font("Times New Roman", Font.BOLD, 15));
+				lblexp.setBounds(20, 124, 94, 28);
 				panel.add(lblexp);
 			}
 			{
 				JLabel lblphone = new JLabel("Phone :");
-				lblphone.setBounds(33, 146, 81, 18);
+				lblphone.setFont(new Font("Times New Roman", Font.BOLD, 15));
+				lblphone.setBounds(20, 171, 81, 28);
 				panel.add(lblphone);
 			}{
 				JLabel lbladdr = new JLabel("Address :");
-				lbladdr.setBounds(20, 189, 81, 18);
+				lbladdr.setFont(new Font("Times New Roman", Font.BOLD, 15));
+				lbladdr.setBounds(20, 218, 94, 28);
 				panel.add(lbladdr);
 			}
 			{
 				txtaddress = new JTextField();
+				txtaddress.setFont(new Font("Times New Roman", Font.BOLD, 15));
 				txtaddress.setColumns(10);
-				txtaddress.setBounds(111, 184, 241, 29);
+				txtaddress.setBounds(193, 209, 262, 37);
 				panel.add(txtaddress);
 			}
 			
 			txtname = new JTextField();
+			txtname.setFont(new Font("Times New Roman", Font.BOLD, 15));
 			txtname.setColumns(10);
-			txtname.setBounds(111, 61, 241, 29);
+			txtname.setBounds(193, 68, 262, 37);
 			panel.add(txtname);
 			
 			cbonurse = new JComboBox();
+			cbonurse.setFont(new Font("Times New Roman", Font.BOLD, 15));
 			cbonurse.setModel(new DefaultComboBoxModel(new String[] {"---Select---"}));
 			cbonurse.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -102,20 +111,23 @@ public class nurseUpdate extends JDialog {
 						txtphone.setText("");
 						txtexp.setText("");
 					}
+					
 					else {
 						showNurse();
 					}
 				}
 			});
-			cbonurse.setBounds(111, 20, 241, 21);
+			cbonurse.setBounds(193, 20, 262, 38);
 			panel.add(cbonurse);
 			
 			txtexp = new JTextField();
+			txtexp.setFont(new Font("Times New Roman", Font.BOLD, 15));
 			txtexp.setColumns(10);
-			txtexp.setBounds(111, 100, 241, 29);
+			txtexp.setBounds(193, 115, 262, 37);
 			panel.add(txtexp);
 			
 			txtphone = new JTextField();
+			txtphone.setFont(new Font("Times New Roman", Font.BOLD, 15));
 			txtphone.addInputMethodListener(new InputMethodListener() {
 				public void caretPositionChanged(InputMethodEvent event) {
 				}
@@ -124,11 +136,12 @@ public class nurseUpdate extends JDialog {
 				}
 			});
 			txtphone.setColumns(10);
-			txtphone.setBounds(111, 141, 241, 29);
+			txtphone.setBounds(193, 162, 262, 37);
 			panel.add(txtphone);
 		}
 		{
 			btnclose = new JButton("Close");
+			btnclose.setFont(new Font("Times New Roman", Font.BOLD, 15));
 			btnclose.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?","Confrim",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION)
@@ -137,11 +150,12 @@ public class nurseUpdate extends JDialog {
 					}
 				}
 			});
-			btnclose.setBounds(422, 281, 85, 23);
+			btnclose.setBounds(398, 289, 109, 35);
 			getContentPane().add(btnclose);
 		}
 		{
 			btnDelete = new JButton("Delete");
+			btnDelete.setFont(new Font("Times New Roman", Font.BOLD, 15));
 			btnDelete.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
@@ -150,7 +164,10 @@ public class nurseUpdate extends JDialog {
 	                    {
 	                    	mySQLQueries.deleteRecord("nurse", id);
 	                    	clear();
-	                    	//fillNurse();
+	                    	fillNurse();
+	                    	dispose();
+	                    	nurseUpdate pkgUpd= new nurseUpdate();
+	                    	pkgUpd.show();
 	                    }
 	                    else
 	                    {
@@ -162,30 +179,27 @@ public class nurseUpdate extends JDialog {
 
 				}
 			});
-			btnDelete.setBounds(221, 281, 85, 23);
+			btnDelete.setBounds(209, 289, 109, 35);
 			getContentPane().add(btnDelete);
 		}
 		{
 			btnUpdate = new JButton("Update");
+			btnUpdate.setFont(new Font("Times New Roman", Font.BOLD, 15));
 			btnUpdate.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					String A= txtname.getText().toString();
 			        if(cbonurse.getSelectedIndex()==0) 
 			        {
 			            JOptionPane.showMessageDialog(null, "Please choose patient id.");
 			            cbonurse.requestFocus();
 			        }
-			        else if(!Checking.IsValidName(txtname.getText()))
+			        else if((!Checking.IsValidName(A)) || A.charAt(0) ==' ' )
 			        {
-			        	JOptionPane.showMessageDialog(null, "Please enter VALID Name.");
+			            JOptionPane.showMessageDialog(null, "Please enter VALID Name.");
 			            txtname.requestFocus();
 			            txtname.selectAll();
 			        }
-			        else if(Integer.parseInt(txtexp.getText())>60) 
-			        {
-			            JOptionPane.showMessageDialog(null, "Please enter valid experience year.");
-			            txtexp.requestFocus();
-			            txtexp.selectAll();
-			        }else if(!Checking.IsAllDigit(txtexp.getText().trim())) 
+			        else if(!Checking.IsAllDigit(txtexp.getText().trim())) 
 			        {
 			            JOptionPane.showMessageDialog(null, "Please enter valid Experience.");
 			            txtexp.requestFocus();
@@ -197,6 +211,12 @@ public class nurseUpdate extends JDialog {
 				            txtexp.requestFocus();
 				            txtexp.selectAll();
 		             }
+			        else if(Integer.parseInt(txtexp.getText())>60) 
+			        {
+			            JOptionPane.showMessageDialog(null, "Please enter valid experience year.");
+			            txtexp.requestFocus();
+			            txtexp.selectAll();
+			        }
 			        else if(Checking.IsNull(txtaddress.getText())) 
 			        {
 			            JOptionPane.showMessageDialog(null, "Please enter Address.");
@@ -244,7 +264,8 @@ public class nurseUpdate extends JDialog {
 			        }
 				}
 			});
-			btnUpdate.setBounds(10, 281, 79, 23);
+			clear();
+			btnUpdate.setBounds(10, 289, 97, 35);
 			getContentPane().add(btnUpdate);
 		}
 		fillNurse();
@@ -254,7 +275,7 @@ public class nurseUpdate extends JDialog {
    {
        String str[]=mySQLQueries.getIDForChoice("nurse");
        for(int i = 0 ; i<str.length ; i++)
-    	   cbonurse.addItem(str[i].toString());
+    	   cbonurse.addItem(str[i]);
    }
     public void showNurse()
     {
@@ -268,12 +289,10 @@ public class nurseUpdate extends JDialog {
     }
     public void clear()
     {
-        
     	txtname.setText(" ");
         txtexp.setText(" ");
         txtphone.setText(" ");
         txtaddress.setText(" ");
         cbonurse.requestFocus();
-        cbonurse.setSelectedIndex(0);
     }
 }

@@ -16,6 +16,7 @@ import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class PackageDetailUpdate extends JDialog {
 	private JComboBox cbopackage;
@@ -44,31 +45,35 @@ public class PackageDetailUpdate extends JDialog {
 	 */
 	public PackageDetailUpdate() {
 		setTitle("Price Edit");
-		setBounds(100, 100, 360, 250);
+		setBounds(100, 100, 493, 406);
 		getContentPane().setLayout(null);
 		{
 			JPanel panel = new JPanel();
 			panel.setLayout(null);
 			panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Customer Update Info:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-			panel.setBounds(10, 11, 325, 157);
+			panel.setBounds(10, 11, 432, 252);
 			getContentPane().add(panel);
 			{
 				JLabel lblpackageID = new JLabel("Package ID:");
-				lblpackageID.setBounds(20, 23, 81, 14);
+				lblpackageID.setFont(new Font("Times New Roman", Font.BOLD, 15));
+				lblpackageID.setBounds(20, 34, 99, 30);
 				panel.add(lblpackageID);
 			}
 			{
 				JLabel lblnurseID = new JLabel("Nurse ID :");
-				lblnurseID.setBounds(27, 63, 56, 14);
+				lblnurseID.setFont(new Font("Times New Roman", Font.BOLD, 15));
+				lblnurseID.setBounds(20, 102, 81, 36);
 				panel.add(lblnurseID);
 			}
 			{
 				JLabel lblNewLabel_2 = new JLabel("Price :");
-				lblNewLabel_2.setBounds(45, 103, 56, 14);
+				lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 15));
+				lblNewLabel_2.setBounds(27, 173, 74, 36);
 				panel.add(lblNewLabel_2);
 			}
 			{
 				cbopackage = new JComboBox();
+				cbopackage.setFont(new Font("Times New Roman", Font.BOLD, 15));
 				cbopackage.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 //						if(cbopackage.getSelectedIndex()<=0)
@@ -84,11 +89,12 @@ public class PackageDetailUpdate extends JDialog {
 						
 					}
 				});
-				cbopackage.setBounds(111, 19, 167, 22);
+				cbopackage.setBounds(163, 34, 240, 30);
 				panel.add(cbopackage);
 			}
 			
 			cbonurse_1 = new JComboBox();
+			cbonurse_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
 			cbonurse_1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(cbonurse_1.getSelectedIndex()<=0 && cbopackage.getSelectedIndex()<=0)
@@ -101,16 +107,18 @@ public class PackageDetailUpdate extends JDialog {
 					}
 				}
 			});
-			cbonurse_1.setBounds(111, 59, 167, 22);
+			cbonurse_1.setBounds(163, 102, 240, 36);
 			panel.add(cbonurse_1);
 			
 			txtprice = new JTextField();
-			txtprice.setBounds(111, 101, 167, 22);
+			txtprice.setFont(new Font("Times New Roman", Font.BOLD, 15));
+			txtprice.setBounds(163, 173, 240, 36);
 			panel.add(txtprice);
 			txtprice.setColumns(10);
 		}
 		{
 			btnclose = new JButton("Close");
+			btnclose.setFont(new Font("Times New Roman", Font.BOLD, 15));
 			btnclose.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?","Confrim",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION)
@@ -119,13 +127,19 @@ public class PackageDetailUpdate extends JDialog {
 					}
 				}
 			});
-			btnclose.setBounds(250, 178, 85, 23);
+			btnclose.setBounds(347, 298, 95, 34);
 			getContentPane().add(btnclose);
 		}
 		{
 			btnDelete = new JButton("Delete");
+			btnDelete.setFont(new Font("Times New Roman", Font.BOLD, 15));
 			btnDelete.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					if(cbopackage.getSelectedIndex()==0)
+			            JOptionPane.showMessageDialog(null,"Please choose department id!");
+				else if(cbonurse_1.getSelectedIndex()==0)
+			            JOptionPane.showMessageDialog(null,"Please choose duty id!");
+				else {
 					try {
 	                    String id = cbopackage.getSelectedItem().toString();
 	                    String nid=cbonurse_1.getSelectedItem().toString();
@@ -133,6 +147,9 @@ public class PackageDetailUpdate extends JDialog {
 	                    {
 	                    	mySQLQueries.deletePackageDetailRecord("packagedetail",id,nid);
 	                    	fillprice();
+	                    	dispose();
+	                    	PackageDetailUpdate pkgUpd= new PackageDetailUpdate();
+	                    	pkgUpd.show();
 	                    }
 	                    else
 	                    {
@@ -143,12 +160,15 @@ public class PackageDetailUpdate extends JDialog {
 	                }
 
 				}
+				}
+					
 			});
-			btnDelete.setBounds(129, 178, 85, 23);
+			btnDelete.setBounds(184, 298, 101, 34);
 			getContentPane().add(btnDelete);
 		}
 		{
 			btnUpdate = new JButton("Update");
+			btnUpdate.setFont(new Font("Times New Roman", Font.BOLD, 15));
 			btnUpdate.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 
@@ -192,7 +212,7 @@ public class PackageDetailUpdate extends JDialog {
 			        }
 				}
 			});
-			btnUpdate.setBounds(10, 178, 79, 23);
+			btnUpdate.setBounds(10, 298, 106, 34);
 			getContentPane().add(btnUpdate);
 		}
 		fillprice();
@@ -235,5 +255,6 @@ public class PackageDetailUpdate extends JDialog {
         txtprice.setText("");
         cbopackage.requestFocus();
         cbopackage.setSelectedIndex(0);
+        cbonurse_1.setSelectedIndex(0);
     }
 }

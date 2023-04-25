@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import java.awt.Label;
+import java.awt.SystemColor;
+
 import javax.swing.JTextPane;
 import java.awt.TextArea;
 import java.awt.Font;
@@ -47,18 +49,18 @@ public class firstpage extends JDialog {
 		contentPanel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Welcome To Health & Safe World");
-		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		lblNewLabel.setBounds(561, 24, 553, 33);
+		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 30));
+		lblNewLabel.setBounds(503, 0, 578, 52);
 		contentPanel.add(lblNewLabel);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.PINK);
-		panel.setBounds(10, 185, 1516, 532);
+		panel.setBackground(new Color(255, 99, 71));
+		panel.setBounds(10, 0, 1516, 817);
 		contentPanel.add(panel);
 		panel.setLayout(null);
 		
 		btnlogin = new JButton("LOGIN");
-		btnlogin.setBounds(788, 232, 126, 29);
+		btnlogin.setBounds(763, 364, 134, 29);
 		panel.add(btnlogin);
 		btnlogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -67,11 +69,11 @@ public class firstpage extends JDialog {
 				dispose();
 			}
 		});
-		btnlogin.setBackground(Color.ORANGE);
+		//btnlogin.setBackground(new Color(255, 99, 71));
 		btnlogin.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		
 		JButton btnregister = new JButton("REGISTER");
-		btnregister.setBounds(609, 231, 141, 29);
+		btnregister.setBounds(576, 363, 141, 29);
 		panel.add(btnregister);
 		btnregister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -79,11 +81,11 @@ public class firstpage extends JDialog {
 				r.show();
 			}
 		});
-		btnregister.setBackground(Color.ORANGE);
+		//btnregister.setBackground(new Color(255, 99, 71));
 		btnregister.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setBounds(377, 10, 743, 522);
+		lblNewLabel_1.setBounds(377, 137, 743, 522);
 		panel.add(lblNewLabel_1);
 		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\HP\\Pictures\\Saved Pictures\\dementia-care-keeping-home-with-asset-protection-planning-Cleveland.jpg"));
 		btnregister.requestDefaultFocus();

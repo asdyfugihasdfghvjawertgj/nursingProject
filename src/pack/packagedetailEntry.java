@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class packagedetailEntry extends JDialog {
 
@@ -41,39 +42,46 @@ public class packagedetailEntry extends JDialog {
 	 * Create the dialog.
 	 */
 	public packagedetailEntry() {
-		setBounds(100, 100, 928, 663);
+		setBounds(100, 100, 701, 497);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
 			JLabel lblNewLabel = new JLabel("Package Id:");
-			lblNewLabel.setBounds(40, 36, 81, 13);
+			lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 15));
+			lblNewLabel.setBounds(64, 57, 101, 29);
 			contentPanel.add(lblNewLabel);
 		}
 		
 		cbopackage = new JComboBox();
-		cbopackage.setBounds(177, 32, 295, 21);
+		cbopackage.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		cbopackage.setBounds(237, 50, 414, 42);
 		contentPanel.add(cbopackage);
 		
 		JLabel lblNewLabel_1 = new JLabel("nurse id");
-		lblNewLabel_1.setBounds(40, 103, 69, 13);
+		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_1.setBounds(64, 146, 90, 42);
 		contentPanel.add(lblNewLabel_1);
 		
 		cbonurse = new JComboBox();
-		cbonurse.setBounds(177, 99, 295, 21);
+		cbonurse.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		cbonurse.setBounds(237, 146, 414, 42);
 		contentPanel.add(cbonurse);
 		
 		JLabel lblNewLabel_2 = new JLabel("price");
-		lblNewLabel_2.setBounds(40, 179, 45, 13);
+		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_2.setBounds(64, 237, 107, 42);
 		contentPanel.add(lblNewLabel_2);
 		
 		txtprice = new JTextField();
-		txtprice.setBounds(177, 173, 295, 19);
+		txtprice.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		txtprice.setBounds(237, 238, 414, 42);
 		contentPanel.add(txtprice);
 		txtprice.setColumns(10);
 		
 		btnsave = new JButton("save");
+		btnsave.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnsave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(cbopackage.getSelectedIndex()==0)
@@ -119,19 +127,21 @@ public class packagedetailEntry extends JDialog {
 	        }
 			}
 		});
-		btnsave.setBounds(173, 380, 85, 21);
+		btnsave.setBounds(173, 366, 107, 35);
 		contentPanel.add(btnsave);
 		
 		btncancel = new JButton("cancel");
+		btncancel.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btncancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clear();
 			}
 		});
-		btncancel.setBounds(350, 380, 85, 21);
+		btncancel.setBounds(343, 366, 101, 35);
 		contentPanel.add(btncancel);
 		
 		btnclear = new JButton("close");
+		btnclear.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnclear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?","Confrim",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION)
@@ -140,7 +150,7 @@ public class packagedetailEntry extends JDialog {
 				}
 			}
 		});
-		btnclear.setBounds(506, 380, 85, 21);
+		btnclear.setBounds(490, 366, 101, 35);
 		contentPanel.add(btnclear);
 		fillPackage();
 		fillNurse();

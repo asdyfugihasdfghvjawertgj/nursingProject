@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import java.awt.Choice;
 import javax.swing.JTextArea;
+import java.awt.Font;
 
 public class nurseEntry extends JDialog {
 
@@ -63,43 +64,51 @@ public class nurseEntry extends JDialog {
 		contentPanel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Nurse ID:");
-		lblNewLabel.setBounds(10, 25, 97, 37);
+		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel.setBounds(146, 28, 97, 29);
 		contentPanel.add(lblNewLabel);
 		
 		lblnurseid = new JLabel("");
-		lblnurseid.setBounds(162, 28, 253, 34);
+		lblnurseid.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblnurseid.setBounds(329, 25, 273, 34);
 		contentPanel.add(lblnurseid);
 		
 		lblNewLabel_2 = new JLabel("Name:");
-		lblNewLabel_2.setBounds(10, 72, 45, 13);
+		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_2.setBounds(146, 80, 78, 27);
 		contentPanel.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_1 = new JLabel("Dep ID:");
-		lblNewLabel_1.setBounds(10, 112, 97, 34);
+		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_1.setBounds(146, 128, 97, 34);
 		contentPanel.add(lblNewLabel_1);
 		
 		cbodepid = new JComboBox();
+		cbodepid.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		cbodepid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//fillBrand();
 			}
 		});
-		cbodepid.setBounds(162, 111, 273, 29);
+		cbodepid.setBounds(325, 132, 277, 29);
 		contentPanel.add(cbodepid);
 		
 		cbodutyid = new JComboBox();
+		cbodutyid.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		cbodutyid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		cbodutyid.setBounds(162, 156, 273, 29);
+		cbodutyid.setBounds(325, 187, 277, 29);
 		contentPanel.add(cbodutyid);
 		
 		JLabel lblNewLabel_3 = new JLabel("Gender:");
-		lblNewLabel_3.setBounds(10, 219, 45, 13);
+		lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_3.setBounds(146, 232, 78, 29);
 		contentPanel.add(lblNewLabel_3);
 		
 		rdoMale = new JRadioButton("Male");
+		rdoMale.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		rdoMale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(rdoMale.isSelected()) {
@@ -108,10 +117,11 @@ public class nurseEntry extends JDialog {
 				}
 			}
 		});
-		rdoMale.setBounds(158, 215, 103, 21);
+		rdoMale.setBounds(327, 237, 103, 21);
 		contentPanel.add(rdoMale);
 		
 		rdoFemale = new JRadioButton("Female");
+		rdoFemale.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		rdoFemale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(rdoFemale.isSelected()) {
@@ -120,47 +130,55 @@ public class nurseEntry extends JDialog {
 				}
 			}
 		});
-		rdoFemale.setBounds(276, 215, 103, 21);
+		rdoFemale.setBounds(495, 237, 103, 21);
 		contentPanel.add(rdoFemale);
 		
 		JLabel lblNewLabel_4 = new JLabel("Experience:");
-		lblNewLabel_4.setBounds(10, 260, 64, 13);
+		lblNewLabel_4.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_4.setBounds(146, 289, 86, 27);
 		contentPanel.add(lblNewLabel_4);
 		
 		txtexp = new JTextField();
-		txtexp.setBounds(165, 252, 270, 29);
+		txtexp.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		txtexp.setBounds(329, 289, 273, 29);
 		contentPanel.add(txtexp);
 		txtexp.setColumns(10);
 		
 		JLabel lblNewLabel_6 = new JLabel("Phone:");
-		lblNewLabel_6.setBounds(10, 305, 45, 13);
+		lblNewLabel_6.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_6.setBounds(146, 357, 78, 29);
 		contentPanel.add(lblNewLabel_6);
 		
 		JLabel lblNewLabel_7 = new JLabel("Address:");
-		lblNewLabel_7.setBounds(10, 338, 45, 13);
+		lblNewLabel_7.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_7.setBounds(146, 420, 78, 29);
 		contentPanel.add(lblNewLabel_7);
 		
 		txtph = new JTextField();
-		txtph.setBounds(165, 292, 270, 29);
+		txtph.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		txtph.setBounds(329, 358, 273, 29);
 		contentPanel.add(txtph);
 		txtph.setColumns(10);
 		
 		txtaddress = new JTextField();
-		txtaddress.setBounds(165, 335, 270, 28);
+		txtaddress.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		txtaddress.setBounds(329, 421, 273, 28);
 		contentPanel.add(txtaddress);
 		txtaddress.setColumns(10);
 		
 		
 		btnSave = new JButton("save");
+		btnSave.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-		         if(!Checking.IsValidName(txtname1.getText()))
-		         {
+				String A= txtname1.getText().toString();
+		         if((!Checking.IsValidName(A)) || A.charAt(0) ==' ' )
+		        {
 		            JOptionPane.showMessageDialog(null, "Please enter VALID Name.");
 		            txtname1.requestFocus();
 		            txtname1.selectAll();
-		         }
+		        }
 				else if(cbodepid.getSelectedIndex()==0)
 			            JOptionPane.showMessageDialog(null,"Please choose department id!");
 				else if(cbodutyid.getSelectedIndex()==0)
@@ -200,6 +218,8 @@ public class nurseEntry extends JDialog {
 			        }
 			        else if(!mySQLQueries.isPhoneNoValid((String)txtph.getText())) {
 	                	JOptionPane.showMessageDialog(null,"Phone no invalid");
+	                	txtph.requestFocus();
+			            txtph.selectAll();
 			        }
 			        
 			        else
@@ -243,19 +263,21 @@ public class nurseEntry extends JDialog {
 		        }
 			}
 		});
-		btnSave.setBounds(24, 542, 119, 21);
+		btnSave.setBounds(82, 526, 119, 37);
 		contentPanel.add(btnSave);
 		
 		btnCancel = new JButton("Cancel");
+		btnCancel.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clear();
 			}
 		});
-		btnCancel.setBounds(162, 542, 125, 21);
+		btnCancel.setBounds(303, 526, 127, 37);
 		contentPanel.add(btnCancel);
 		
 		btnClose = new JButton("Close");
+		btnClose.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?","Confrim",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION)
@@ -264,15 +286,17 @@ public class nurseEntry extends JDialog {
 				}
 			}
 		});
-		btnClose.setBounds(315, 542, 119, 21);
+		btnClose.setBounds(499, 526, 119, 37);
 		contentPanel.add(btnClose);
 		
 		JLabel lblNewLabel_5 = new JLabel("Duty ID:");
-		lblNewLabel_5.setBounds(10, 164, 45, 13);
+		lblNewLabel_5.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_5.setBounds(144, 187, 80, 29);
 		contentPanel.add(lblNewLabel_5);
 		
 		txtname1 = new JTextArea();
-		txtname1.setBounds(162, 65, 273, 29);
+		txtname1.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		txtname1.setBounds(325, 69, 277, 29);
 		contentPanel.add(txtname1);
 		//
 		AutoID();
@@ -315,8 +339,8 @@ public void clear()
 		txtname1.setText(null);
         cbodepid.setSelectedIndex(0);
         cbodutyid.setSelectedIndex(0);
-        rdoMale.isSelected();
-        rdoFemale.isSelected();
+        rdoMale.setSelected(false);
+        rdoFemale.setSelected(false);
         txtexp.setText("");
         txtph.setText("");
         txtaddress.setText(""); 

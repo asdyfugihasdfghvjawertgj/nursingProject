@@ -170,23 +170,36 @@ public class mySQLQueries {
     }
    public static String[] getViewHistory(int cusid)
    {
-	   try{
-           String[] pdate = new String[4];
-           con=connect.getConnection();
-           stmt = con.createStatement();
-           query = "select * from calling where patientid="+cusid+";";
-           rs=stmt.executeQuery(query);
-           rs.next();
-           pdate[0]=rs.getString(2);
-           pdate[1]=rs.getString(3);
-           pdate[2]=rs.getString(5);
-           pdate[3]=rs.getString(6);
-           return pdate;
-       }catch(SQLException sqle)
-       {
-           System.out.println(sqle);
-           return null;
-       } 
+	   try
+  	 {
+		   
+		   query = "select * from calling where patientid ='"+cusid+"';";
+		   rs=stmt.executeQuery(query);
+  		 int rowcount=0;
+  		 while(rs.next())
+  		 {
+  			 rowcount++;
+  		 }
+  		 String[] temp=new String[rowcount];
+  		 rs.beforeFirst();
+  		 int i=0;
+  		 while(rs.next())
+  		 {
+  			 temp[i]=rs.getString(1);
+  			 i++;
+  		 }
+  		 return temp;
+  	 }
+  	 catch(SQLException sqle)
+  	 {
+  		System.out.println(sqle);
+  		return null;
+  	 }
+  	 catch(Exception e)
+  	 {
+  		 e.printStackTrace();
+  		 return null;
+  	 } 
    }
     public static int getCusid(String cusname)
     {
@@ -206,17 +219,22 @@ public class mySQLQueries {
     }
      public static   String getAutoid(String field , String tabel , String prefix) throws ClassNotFoundException
      {
-         
+    	 if(tabel.equals("package"))
+         {
+             return connect.getPrimaryKey(field, tabel, prefix);
+         }
+         else
+         {
              return connect.getPrimaryKey2(field, tabel, prefix);
-         
+         }
 
      }
      public static void main(String[] args) 
      {
     	 try {
     		 mySQLQueries q=new mySQLQueries();
-    		 System.out.println(con);
-    		 System.out.print(serachPrice1("P-00000001","NU-0000001")[0]);
+    		 //System.out.println(con);
+    		 //System.out.print(serachPrice1("P-00000001","NU-0000001")[0]);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -704,10 +722,10 @@ public class mySQLQueries {
                      return false;
                  }
            }
-         public static boolean afterupdateRecord(String tbName,String id , String []data)
+         public static boolean afterupdateRecord(String tbName,String id,String nid , String []data)
          {
              if(tbName.equals("packagedetail"))
-                 query = "update packagedetail set oncall='"+data[0]+"'where packageid='"+id+"'";
+                 query = "update packagedetail set oncall='"+data[0]+"'where packageid='"+id+"' and nurseid='"+nid+"'";
   //           else if(tbName.equals("brand"))
 //                  query = "update brand set brandname='"+data[0]+"' where brandid='"+id+"'";
 //             else if(tbName.equals("type"))

@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import pack.mySQLQueries;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
+import java.awt.Font;
 
 
 
@@ -47,33 +48,38 @@ public class departmentEntry extends JDialog {
 	 */
 	public departmentEntry() throws ClassNotFoundException {
 		setTitle("Brand Entry");
-		setBounds(100, 100, 380, 205);
+		setBounds(100, 100, 536, 307);
 		getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Department Info:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel.setBounds(10, 11, 347, 92);
+		panel.setBounds(10, 11, 491, 162);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Dep ID:");
-		lblNewLabel.setBounds(10, 21, 95, 14);
+		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel.setBounds(10, 21, 95, 35);
 		panel.add(lblNewLabel);
 		
 		JLabel lblBrandName = new JLabel("Dep  Name:");
-		lblBrandName.setBounds(10, 56, 85, 14);
+		lblBrandName.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblBrandName.setBounds(10, 66, 85, 46);
 		panel.add(lblBrandName);
 		
 		txtName = new JTextField();
-		txtName.setBounds(105, 53, 197, 20);
+		txtName.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		txtName.setBounds(167, 66, 280, 46);
 		panel.add(txtName);
 		txtName.setColumns(10);
 		
 		lblid = new JLabel("");
-		lblid.setBounds(105, 21, 100, 14);
+		lblid.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblid.setBounds(167, 21, 280, 35);
 		panel.add(lblid);
 		
 		JButton btnSave = new JButton("Save");
+		btnSave.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String st[] = new String[1];
@@ -130,19 +136,21 @@ public class departmentEntry extends JDialog {
 
 			}
 		});
-		btnSave.setBounds(20, 120, 89, 23);
+		btnSave.setBounds(10, 192, 111, 33);
 		getContentPane().add(btnSave);
 		
 		JButton btnCancel = new JButton("Cancel");
+		btnCancel.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clear();
 			}
 		});
-		btnCancel.setBounds(134, 120, 89, 23);
+		btnCancel.setBounds(200, 192, 111, 33);
 		getContentPane().add(btnCancel);
 		
 		btnClose = new JButton("Close");
+		btnClose.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?","Confrim",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION)
@@ -151,7 +159,7 @@ public class departmentEntry extends JDialog {
 				}
 			}
 		});
-		btnClose.setBounds(253, 120, 89, 23);
+		btnClose.setBounds(388, 192, 113, 33);
 		getContentPane().add(btnClose);
 		AutoID();
 		
