@@ -123,7 +123,7 @@ public class nurseUpdate extends JDialog {
 			txtexp = new JTextField();
 			txtexp.setFont(new Font("Times New Roman", Font.BOLD, 15));
 			txtexp.setColumns(10);
-			txtexp.setBounds(193, 115, 262, 37);
+			txtexp.setBounds(193, 115, 138, 37);
 			panel.add(txtexp);
 			
 			txtphone = new JTextField();
@@ -138,6 +138,11 @@ public class nurseUpdate extends JDialog {
 			txtphone.setColumns(10);
 			txtphone.setBounds(193, 162, 262, 37);
 			panel.add(txtphone);
+			
+			JLabel lblNewLabel = new JLabel("Years");
+			lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 15));
+			lblNewLabel.setBounds(336, 115, 119, 37);
+			panel.add(lblNewLabel);
 		}
 		{
 			btnclose = new JButton("Close");

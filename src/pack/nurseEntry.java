@@ -39,6 +39,7 @@ public class nurseEntry extends JDialog {
 	private JLabel lblNewLabel_8;
 	private JLabel lblNewLabel_2;
 	private JTextArea txtname1;
+	private JLabel lblNewLabel_9;
 	/**
 	 * Launch the application.
 	 */
@@ -140,7 +141,7 @@ public class nurseEntry extends JDialog {
 		
 		txtexp = new JTextField();
 		txtexp.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		txtexp.setBounds(329, 289, 273, 29);
+		txtexp.setBounds(329, 289, 134, 29);
 		contentPanel.add(txtexp);
 		txtexp.setColumns(10);
 		
@@ -298,6 +299,11 @@ public class nurseEntry extends JDialog {
 		txtname1.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		txtname1.setBounds(325, 69, 277, 29);
 		contentPanel.add(txtname1);
+		
+		lblNewLabel_9 = new JLabel("Years");
+		lblNewLabel_9.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_9.setBounds(468, 289, 134, 27);
+		contentPanel.add(lblNewLabel_9);
 		//
 		AutoID();
 		//super(parent,modal);

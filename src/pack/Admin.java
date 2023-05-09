@@ -154,12 +154,12 @@ public class Admin extends JFrame {
 		
 		JPanel panel_1_2 = new JPanel();
 		panel_1_2.setLayout(null);
-		panel_1_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Front", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_1_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "User", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_1_2.setBackground(new Color(255, 160, 122));
 		panel_1_2.setBounds(172, 325, 506, 123);
 		contentPane.add(panel_1_2);
 		
-		btnNewButton_3 = new JButton("Front Entry");
+		btnNewButton_3 = new JButton("User Details");
 		btnNewButton_3.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
